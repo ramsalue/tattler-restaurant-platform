@@ -148,7 +148,7 @@ Stores user comments and discussions about restaurants.
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/tattler-restaurant-platform.git
+git clone https://github.com/ramsalue/tattler-restaurant-platform.git
 cd tattler-restaurant-platform
 ```
 
