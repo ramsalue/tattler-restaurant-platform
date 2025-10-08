@@ -201,13 +201,6 @@ This will create backup files in `data/backup/` directory.
 ```bash
 node scripts/importData.js
 ```
-
-### Restoring from Backup
-To restore data from backup:
-1. Ensure you have a backup file in `data/backup/`
-2. Use MongoDB Compass or mongorestore command
-3. Or create a custom restore script based on your needs
-
 ---
 
 ## Development Guidelines
@@ -235,63 +228,6 @@ git tag -a v1.0.0 -m "Sprint 1 - Database Setup Complete"
 git push origin v1.0.0
 ```
 
-### Commit Message Conventions
-```
-feat: new feature
-fix: bug fix
-docs: documentation changes
-style: formatting, missing semicolons, etc.
-refactor: code restructuring
-test: adding tests
-chore: maintenance tasks
-```
-
----
-
-## Testing
-
-### Manual Testing Checklist
-- [ ] MongoDB Atlas connection successful
-- [ ] All 4 collections created
-- [ ] Indexes created on all collections
-- [ ] Sample data imported successfully
-- [ ] Backup file generated
-- [ ] Screenshots captured and saved
-
-### Verification Queries
-Connect to MongoDB Atlas and run these queries to verify:
-
-```javascript
-// Check restaurants count
-db.restaurants.countDocuments()
-
-// Verify text search index works
-db.restaurants.find({ $text: { $search: "Mexican" } })
-
-// Check users
-db.users.countDocuments()
-
-// Verify indexes
-db.restaurants.getIndexes()
-```
-
----
-
-## Contributing
-
-This is a academic project for Digital NAO. For questions or issues:
-1. Check the documentation
-2. Review screenshots in `/screenshots`
-3. Contact the development team
-
----
-
-## License
-
-MIT License - See LICENSE file for details
-
----
-
 ## Project Team
 
 - **Project Manager**: Alejandra
@@ -299,44 +235,12 @@ MIT License - See LICENSE file for details
 - **Database Administrator**: Luis Ramirez
 - **Institution**: Digital NAO
 
----
-
-## Project Timeline
-
-### Sprint 1 (Completed)
-- Database setup and configuration
-- MongoDB Atlas cluster creation
-- Collections and indexes implementation
-- CSV import scripts
-- Database backup system
-
-### Sprint 2 (Upcoming)
-- RESTful API development with Express.js
-- CRUD endpoints implementation
-- Rating and comment systems
-
-### Sprint 3 (Planned)
-- Advanced search functionality
-- Filtering and sorting features
-- Personalized recommendations
-
----
-
 ## Additional Resources
 
 - [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
 - [MongoDB Node.js Driver](https://docs.mongodb.com/drivers/node/)
 - [Semantic Versioning](https://semver.org/)
 - [Git Best Practices](https://git-scm.com/book/en/v2)
-
-
-## Future Enhancements
-
-- Automated backup scheduling
-- Data validation improvements
-- Additional sample datasets
-- Performance optimization
-- Migration scripts for schema updates
 
 ---
 

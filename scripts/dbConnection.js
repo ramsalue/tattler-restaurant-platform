@@ -1,4 +1,5 @@
 // scripts/dbConnection.js
+// This script is never run directly from the command line
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
 

@@ -1,4 +1,11 @@
 // scripts/importData.js
+/*
+  1. It imports connectDB and closeDB.
+  2. It includes a helper function parseCSV() to read the .csv files and convert them into an ARRAY of JavaScript objects.
+  3. The importRestaurants() function reads restaurants.csv and maps over each row. For each restaurant, 
+     it creates a document object, ensuring the data types match the schema. 
+  5. The importAllData() calls the functions to import both restaurants and users, and then closes the connection.
+*/
 const { MongoClient, Double, Int32 } = require('mongodb');  // ← Add Double and Int32
 const fs = require('fs');
 const path = require('path');
@@ -99,20 +106,20 @@ async function importUsers() {
     }));
 
     const result = await db.collection('users').insertMany(users);
-    console.log(`✅ Imported ${result.insertedCount} users`);
+    console.log(` Imported ${result.insertedCount} users`);
     
   } catch (error) {
-    console.error('❌ Error importing users:', error);
+    console.error(' Error importing users:', error);
   }
 }
 
 async function importAllData() {
-  console.log('🚀 Starting data import...\n');
+  console.log(' Starting data import...\n');
   
   await importRestaurants();
   await importUsers();
   
-  console.log('\n🎉 Data import completed!');
+  console.log('\n Data import completed!');
   await closeDB();
 }
 

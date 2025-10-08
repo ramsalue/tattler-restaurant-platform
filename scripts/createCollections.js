@@ -1,4 +1,13 @@
 // scripts/createCollections.js
+/*
+  1. It imports the connectDB and closeDB functions from dbConnection.js.
+  2. It connects to the database using connectDB().
+  3. It then executes db.createCollection() for each of the four collections (restaurants, users, ratings, comments). 
+     For each one, it passes a validator object which enforces the strict $jsonSchema rules. This ensures data integrity at the database level.
+  4. After creating each collection, it calls db.collection(...).createIndexes() to create multiple indexes that will 
+     speed up future queries (like searching by text, filtering by city, or sorting by rating).
+  5. It uses a try...catch...finally block to handle errors and ensure that the database connection is always closed at the end with closeDB().
+*/
 const { connectDB, closeDB } = require('./dbConnection');
 
 async function createCollections() {
