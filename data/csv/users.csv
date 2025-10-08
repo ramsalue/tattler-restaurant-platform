@@ -1,0 +1,6 @@
+userId,email,username,favoriteCuisines,preferredPriceRange
+user001,ana.garcia@email.com,ana_garcia,Mexican;Italian,$$;$$$
+user002,carlos.rodriguez@email.com,carlos_r,Japanese;Chinese,$$;$$$
+user003,maria.lopez@email.com,maria_lopez,Vegetarian;Indian,$;$$
+user004,juan.martinez@email.com,juan_m,American;Steakhouse,$;$$$$
+user005,sofia.hernandez@email.com,sofia_h,French;Italian,$$$;$$$$

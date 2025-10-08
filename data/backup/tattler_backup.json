@@ -1,0 +1,477 @@
+{
+  "timestamp": "2025-10-08T06:44:22.342Z",
+  "version": "1.0.0",
+  "collections": {
+    "restaurants": [
+      {
+        "_id": "68e60695b085ed8631e8eb8a",
+        "name": "La Taquería Mexicana",
+        "cuisine": "Mexican",
+        "location": {
+          "address": "123 Main St",
+          "city": "Mexico City",
+          "state": "CDMX",
+          "zipCode": "01000",
+          "coordinates": {
+            "latitude": 19.4326,
+            "longitude": -99.1332
+          }
+        },
+        "priceRange": "$$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0101",
+        "website": "www.lataqueria.com",
+        "description": "Authentic Mexican tacos and traditional dishes",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb8b",
+        "name": "Sushi Palace",
+        "cuisine": "Japanese",
+        "location": {
+          "address": "456 Ocean Ave",
+          "city": "Guadalajara",
+          "state": "Jalisco",
+          "zipCode": "44100",
+          "coordinates": {
+            "latitude": 20.6597,
+            "longitude": -103.3496
+          }
+        },
+        "priceRange": "$$$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0102",
+        "website": "www.sushipalace.com",
+        "description": "Premium sushi and Japanese cuisine",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb8c",
+        "name": "Pasta Bella",
+        "cuisine": "Italian",
+        "location": {
+          "address": "789 Roma St",
+          "city": "Monterrey",
+          "state": "Nuevo León",
+          "zipCode": "64000",
+          "coordinates": {
+            "latitude": 25.6866,
+            "longitude": -100.3161
+          }
+        },
+        "priceRange": "$$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0103",
+        "website": "www.pastabella.com",
+        "description": "Homemade pasta and Italian specialties",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb8d",
+        "name": "The Burger Joint",
+        "cuisine": "American",
+        "location": {
+          "address": "321 Liberty Rd",
+          "city": "Puebla",
+          "state": "Puebla",
+          "zipCode": "72000",
+          "coordinates": {
+            "latitude": 19.0414,
+            "longitude": -98.2063
+          }
+        },
+        "priceRange": "$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0104",
+        "website": "www.burgerjoint.com",
+        "description": "Gourmet burgers and craft beers",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb8e",
+        "name": "Green Garden",
+        "cuisine": "Vegetarian",
+        "location": {
+          "address": "654 Nature Ln",
+          "city": "Querétaro",
+          "state": "Querétaro",
+          "zipCode": "76000",
+          "coordinates": {
+            "latitude": 20.5888,
+            "longitude": -100.3899
+          }
+        },
+        "priceRange": "$$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0105",
+        "website": "www.greengarden.com",
+        "description": "Organic vegetarian and vegan options",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb8f",
+        "name": "Spice Route",
+        "cuisine": "Indian",
+        "location": {
+          "address": "987 Curry St",
+          "city": "Tijuana",
+          "state": "Baja California",
+          "zipCode": "22000",
+          "coordinates": {
+            "latitude": 32.5149,
+            "longitude": -117.0382
+          }
+        },
+        "priceRange": "$$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0106",
+        "website": "www.spiceroute.com",
+        "description": "Authentic Indian curries and tandoori",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb90",
+        "name": "Le Croissant",
+        "cuisine": "French",
+        "location": {
+          "address": "147 Paris Ave",
+          "city": "Cancún",
+          "state": "Quintana Roo",
+          "zipCode": "77500",
+          "coordinates": {
+            "latitude": 21.1619,
+            "longitude": -86.8515
+          }
+        },
+        "priceRange": "$$$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0107",
+        "website": "www.lecroissant.com",
+        "description": "French pastries and fine dining",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb91",
+        "name": "Dragon Wok",
+        "cuisine": "Chinese",
+        "location": {
+          "address": "258 Dynasty Rd",
+          "city": "Mérida",
+          "state": "Yucatán",
+          "zipCode": "97000",
+          "coordinates": {
+            "latitude": 20.9674,
+            "longitude": -89.5926
+          }
+        },
+        "priceRange": "$$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0108",
+        "website": "www.dragonwok.com",
+        "description": "Traditional Chinese cuisine and dim sum",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb92",
+        "name": "Steakhouse Prime",
+        "cuisine": "Steakhouse",
+        "location": {
+          "address": "369 Beef Blvd",
+          "city": "León",
+          "state": "Guanajuato",
+          "zipCode": "37000",
+          "coordinates": {
+            "latitude": 21.125,
+            "longitude": -101.686
+          }
+        },
+        "priceRange": "$$$$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0109",
+        "website": "www.steakhouseprime.com",
+        "description": "Premium aged steaks and wine selection",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb93",
+        "name": "Café Aroma",
+        "cuisine": "Café",
+        "location": {
+          "address": "741 Coffee St",
+          "city": "San Luis Potosí",
+          "state": "San Luis Potosí",
+          "zipCode": "78000",
+          "coordinates": {
+            "latitude": 22.1565,
+            "longitude": -100.9855
+          }
+        },
+        "priceRange": "$",
+        "rating": 0,
+        "totalRatings": 0,
+        "amenities": [
+          "WiFi",
+          "Parking"
+        ],
+        "phone": "555-0110",
+        "website": "www.cafearoma.com",
+        "description": "Specialty coffee and artisan desserts",
+        "images": [],
+        "openingHours": {
+          "monday": "9:00 AM - 10:00 PM",
+          "tuesday": "9:00 AM - 10:00 PM",
+          "wednesday": "9:00 AM - 10:00 PM",
+          "thursday": "9:00 AM - 10:00 PM",
+          "friday": "9:00 AM - 11:00 PM",
+          "saturday": "10:00 AM - 11:00 PM",
+          "sunday": "10:00 AM - 9:00 PM"
+        },
+        "createdAt": "2025-10-08T06:37:09.848Z",
+        "updatedAt": "2025-10-08T06:37:09.848Z"
+      }
+    ],
+    "users": [
+      {
+        "_id": "68e60695b085ed8631e8eb94",
+        "userId": "user001",
+        "email": "ana.garcia@email.com",
+        "username": "ana_garcia",
+        "preferences": {
+          "favoriteCuisines": [
+            "Mexican",
+            "Italian"
+          ],
+          "preferredPriceRange": [
+            "$$",
+            "$$$"
+          ],
+          "dietaryRestrictions": []
+        },
+        "favoriteRestaurants": [],
+        "createdAt": "2025-10-08T06:37:09.942Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb95",
+        "userId": "user002",
+        "email": "carlos.rodriguez@email.com",
+        "username": "carlos_r",
+        "preferences": {
+          "favoriteCuisines": [
+            "Japanese",
+            "Chinese"
+          ],
+          "preferredPriceRange": [
+            "$$",
+            "$$$"
+          ],
+          "dietaryRestrictions": []
+        },
+        "favoriteRestaurants": [],
+        "createdAt": "2025-10-08T06:37:09.942Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb96",
+        "userId": "user003",
+        "email": "maria.lopez@email.com",
+        "username": "maria_lopez",
+        "preferences": {
+          "favoriteCuisines": [
+            "Vegetarian",
+            "Indian"
+          ],
+          "preferredPriceRange": [
+            "$",
+            "$$"
+          ],
+          "dietaryRestrictions": []
+        },
+        "favoriteRestaurants": [],
+        "createdAt": "2025-10-08T06:37:09.942Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb97",
+        "userId": "user004",
+        "email": "juan.martinez@email.com",
+        "username": "juan_m",
+        "preferences": {
+          "favoriteCuisines": [
+            "American",
+            "Steakhouse"
+          ],
+          "preferredPriceRange": [
+            "$",
+            "$$$$"
+          ],
+          "dietaryRestrictions": []
+        },
+        "favoriteRestaurants": [],
+        "createdAt": "2025-10-08T06:37:09.942Z"
+      },
+      {
+        "_id": "68e60695b085ed8631e8eb98",
+        "userId": "user005",
+        "email": "sofia.hernandez@email.com",
+        "username": "sofia_h",
+        "preferences": {
+          "favoriteCuisines": [
+            "French",
+            "Italian"
+          ],
+          "preferredPriceRange": [
+            "$$$",
+            "$$$$"
+          ],
+          "dietaryRestrictions": []
+        },
+        "favoriteRestaurants": [],
+        "createdAt": "2025-10-08T06:37:09.942Z"
+      }
+    ],
+    "ratings": [],
+    "comments": []
+  }
+}

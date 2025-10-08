@@ -1,0 +1,120 @@
+// scripts/importData.js
+const { MongoClient, Double, Int32 } = require('mongodb');  // ← Agregar Double e Int32
+const fs = require('fs');
+const path = require('path');
+const { connectDB, closeDB } = require('./dbConnection');
+
+
+// Simple CSV parser
+function parseCSV(filePath) {
+  const content = fs.readFileSync(filePath, 'utf-8');
+  const lines = content.split('\n').filter(line => line.trim());
+  const headers = lines[0].split(',').map(h => h.trim());
+  
+  const data = [];
+  for (let i = 1; i < lines.length; i++) {
+    const values = lines[i].split(',').map(v => v.trim());
+    const obj = {};
+    headers.forEach((header, index) => {
+      obj[header] = values[index];
+    });
+    data.push(obj);
+  }
+  
+  return data;
+}
+
+async function importRestaurants() {
+  const db = await connectDB();
+  
+  try {
+    const restaurantsData = parseCSV(path.join(__dirname, '../data/csv/restaurants.csv'));
+    
+    const restaurants = restaurantsData.map(row => ({
+      name: row.name,
+      cuisine: row.cuisine,
+      location: {
+        address: row.address,
+        city: row.city,
+        state: row.state,
+        zipCode: row.zipCode,
+        coordinates: {
+          latitude: new Double(parseFloat(row.latitude)),   // ← Forzar Double
+          longitude: new Double(parseFloat(row.longitude))  // ← Forzar Double
+        }
+      },
+      priceRange: row.priceRange,
+      rating: new Double(0.0),              // ← FORZAR TIPO DOUBLE BSON
+      totalRatings: new Int32(0),           // ← FORZAR TIPO INT32 BSON
+      amenities: ['WiFi', 'Parking'],
+      phone: row.phone,
+      website: row.website,
+      description: row.description,
+      images: [],
+      openingHours: {
+        monday: '9:00 AM - 10:00 PM',
+        tuesday: '9:00 AM - 10:00 PM',
+        wednesday: '9:00 AM - 10:00 PM',
+        thursday: '9:00 AM - 10:00 PM',
+        friday: '9:00 AM - 11:00 PM',
+        saturday: '10:00 AM - 11:00 PM',
+        sunday: '10:00 AM - 9:00 PM'
+      },
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }));
+
+    console.log('\n📋 Documento a insertar (con tipos BSON):');
+    console.log(JSON.stringify(restaurants[0], null, 2));
+
+    const result = await db.collection('restaurants').insertMany(restaurants);
+    console.log(`✅ Imported ${result.insertedCount} restaurants`);
+    
+  } catch (error) {
+    console.error('❌ Error importing restaurants:', error);
+    if (error.writeErrors) {
+      console.error('\n📍 Detalles del error:');
+      console.error(JSON.stringify(error.writeErrors[0], null, 2));
+    }
+  }
+}
+
+async function importUsers() {
+  const db = await connectDB();
+  
+  try {
+    const usersData = parseCSV(path.join(__dirname, '../data/csv/users.csv'));
+    
+    const users = usersData.map(row => ({
+      userId: row.userId,
+      email: row.email,
+      username: row.username,
+      preferences: {
+        favoriteCuisines: row.favoriteCuisines.split(';'),
+        preferredPriceRange: row.preferredPriceRange.split(';'),
+        dietaryRestrictions: []
+      },
+      favoriteRestaurants: [],
+      createdAt: new Date()
+    }));
+
+    const result = await db.collection('users').insertMany(users);
+    console.log(`✅ Imported ${result.insertedCount} users`);
+    
+  } catch (error) {
+    console.error('❌ Error importing users:', error);
+  }
+}
+
+async function importAllData() {
+  console.log('🚀 Starting data import...\n');
+  
+  await importRestaurants();
+  await importUsers();
+  
+  console.log('\n🎉 Data import completed!');
+  await closeDB();
+}
+
+// Run the import
+importAllData();
