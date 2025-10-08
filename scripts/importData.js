@@ -1,5 +1,5 @@
 // scripts/importData.js
-const { MongoClient, Double, Int32 } = require('mongodb');  // ← Agregar Double e Int32
+const { MongoClient, Double, Int32 } = require('mongodb');  // ← Add Double and Int32
 const fs = require('fs');
 const path = require('path');
 const { connectDB, closeDB } = require('./dbConnection');
@@ -39,13 +39,13 @@ async function importRestaurants() {
         state: row.state,
         zipCode: row.zipCode,
         coordinates: {
-          latitude: new Double(parseFloat(row.latitude)),   // ← Forzar Double
-          longitude: new Double(parseFloat(row.longitude))  // ← Forzar Double
+          latitude: new Double(parseFloat(row.latitude)),   // ← Double
+          longitude: new Double(parseFloat(row.longitude))  // ← Double
         }
       },
       priceRange: row.priceRange,
-      rating: new Double(0.0),              // ← FORZAR TIPO DOUBLE BSON
-      totalRatings: new Int32(0),           // ← FORZAR TIPO INT32 BSON
+      rating: new Double(0.0),              // ← Force DOUBLE BSON type
+      totalRatings: new Int32(0),           // ← Force INT32 type
       amenities: ['WiFi', 'Parking'],
       phone: row.phone,
       website: row.website,
@@ -64,16 +64,16 @@ async function importRestaurants() {
       updatedAt: new Date()
     }));
 
-    console.log('\n📋 Documento a insertar (con tipos BSON):');
+    console.log('\n Document to insert (BSON):');
     console.log(JSON.stringify(restaurants[0], null, 2));
 
     const result = await db.collection('restaurants').insertMany(restaurants);
-    console.log(`✅ Imported ${result.insertedCount} restaurants`);
+    console.log(`Imported ${result.insertedCount} restaurants`);
     
   } catch (error) {
-    console.error('❌ Error importing restaurants:', error);
+    console.error('Error importing restaurants:', error);
     if (error.writeErrors) {
-      console.error('\n📍 Detalles del error:');
+      console.error('\n Error details:');
       console.error(JSON.stringify(error.writeErrors[0], null, 2));
     }
   }

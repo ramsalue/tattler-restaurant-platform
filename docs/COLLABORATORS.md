@@ -23,12 +23,12 @@ Simply navigate to the repository URL in any web browser.
 ## Repository Contents
 
 Evaluators can access:
-- ✅ Complete source code
-- ✅ Database backup files
-- ✅ Import scripts
-- ✅ Documentation
-- ✅ Screenshots
-- ✅ README with installation instructions
+- Complete source code
+- Database backup files
+- Import scripts
+- Documentation
+- Screenshots
+- README with installation instructions
 
 ## Questions or Issues?
 

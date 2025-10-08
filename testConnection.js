@@ -1,39 +1,39 @@
-// Carga las variables de entorno del archivo .env
+// Load variables from fyle .env
 require('dotenv').config();
 
 const { MongoClient } = require('mongodb');
 
-// Obtiene la cadena de conexión de las variables de entorno
+// Get conection variables of the entorn
 const uri = process.env.MONGODB_URI;
 
-// Verifica si la URI existe
+// Veirfy if URI exists
 if (!uri) {
-  console.error("❌ Error: No se encontró la variable MONGODB_URI en tu archivo .env");
+  console.error("Error: didn't find MONGODB_URI on file .env");
   process.exit(1);
 }
 
 const client = new MongoClient(uri);
 
 async function runTest() {
-  console.log("Intentando conectar a MongoDB Atlas...");
+  console.log("Trying to connect to MongoDB Atlas...");
   try {
-    // Conectar el cliente al servidor
+    // Connect with server cliente
     await client.connect();
-    // Confirmar la conexión haciendo un ping a la base de datos
+    // Confirm connection doing a ping with data base
     await client.db("admin").command({ ping: 1 });
-    console.log("✅ ¡Éxito! Te conectaste correctamente a MongoDB Atlas.");
-    console.log("✅ Tu cadena de conexión en el archivo .env es correcta.");
+    console.log("Connection to MongoDB Atlas.");
+    console.log("Tu cadena de conexión en el archivo .env es correcta.");
   } catch (error) {
-    console.error("❌ ¡Falló la conexión a MongoDB Atlas!");
-    console.error("   Asegúrate de lo siguiente:");
-    console.error("   1. La contraseña en tu archivo .env es correcta y no tiene caracteres especiales que necesiten ser codificados.");
-    console.error("   2. Tu dirección IP actual está en la lista de acceso de red ('Network Access') en MongoDB Atlas (o está habilitado el acceso desde 0.0.0.0/0).");
-    console.error("   3. El nombre del clúster y el usuario son correctos en la cadena de conexión.");
-    // console.error("\nDetalles del error:", error); // Descomenta esta línea para ver el error completo
+    console.error("Connection to MongoDB Atlas failed!");
+    console.error(" Make sure of the following:");
+    console.error(" 1. The password in your .env file is correct and has no special characters that need encoding.");
+    console.error(" 2. Your current IP address is in the Network Access list in MongoDB Atlas (or access from 0.0.0.0/0 is enabled).");
+    console.error(" 3. The cluster name and user are correct in the connection string.");
+    // console.error("\nError details:", error); // Uncomment this line to see the full error
   } finally {
-    // Asegura que el cliente se cerrará cuando termines/falles
+    // Ensure the client will close upon completion/failure
     await client.close();
-    console.log("🔌 Conexión cerrada.");
+    console.log("Connection closed.");
   }
 }
 

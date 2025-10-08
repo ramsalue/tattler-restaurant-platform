@@ -69,7 +69,7 @@ async function createCollections() {
         }
       }
     });
-    console.log('✅ Created restaurants collection');
+    console.log('Created restaurants collection');
 
     // Create indexes for restaurants
     await db.collection('restaurants').createIndexes([
@@ -80,7 +80,7 @@ async function createCollections() {
       { key: { priceRange: 1 } },
       { key: { 'location.coordinates.latitude': 1, 'location.coordinates.longitude': 1 } }
     ]);
-    console.log('✅ Created indexes for restaurants');
+    console.log('Created indexes for restaurants');
 
     // Create ratings collection
     await db.createCollection('ratings', {
@@ -114,14 +114,14 @@ async function createCollections() {
         }
       }
     });
-    console.log('✅ Created ratings collection');
+    console.log('Created ratings collection');
 
     await db.collection('ratings').createIndexes([
       { key: { restaurantId: 1 } },
       { key: { userId: 1 } },
       { key: { createdAt: -1 } }
     ]);
-    console.log('✅ Created indexes for ratings');
+    console.log('Created indexes for ratings');
 
     // Create comments collection
     await db.createCollection('comments', {
@@ -140,14 +140,14 @@ async function createCollections() {
         }
       }
     });
-    console.log('✅ Created comments collection');
+    console.log('Created comments collection');
 
     await db.collection('comments').createIndexes([
       { key: { restaurantId: 1 } },
       { key: { userId: 1 } },
       { key: { createdAt: -1 } }
     ]);
-    console.log('✅ Created indexes for comments');
+    console.log('Created indexes for comments');
 
     // Create users collection (for preferences)
     await db.createCollection('users', {
@@ -185,17 +185,17 @@ async function createCollections() {
         }
       }
     });
-    console.log('✅ Created users collection');
+    console.log('Created users collection');
 
     await db.collection('users').createIndexes([
       { key: { userId: 1 }, unique: true },
       { key: { email: 1 }, unique: true }
     ]);
-    console.log('✅ Created indexes for users');
+    console.log('Created indexes for users');
 
-    console.log('\n🎉 All collections and indexes created successfully!');
+    console.log('\n All collections and indexes created successfully!');
   } catch (error) {
-    console.error('❌ Error creating collections:', error);
+    console.error('Error creating collections:', error);
   } finally {
     await closeDB();
   }

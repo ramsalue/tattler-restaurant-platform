@@ -5,7 +5,7 @@
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 
-## 📖 Project Description
+## Project Description
 
 Tattler is a modern restaurant directory platform that transforms the traditional static restaurant listing experience into a dynamic, personalized application. Using MongoDB for flexible data storage and Express.js for RESTful API services, Tattler enables users to discover restaurants based on their preferences, rate their experiences, and receive personalized recommendations.
 
@@ -25,7 +25,7 @@ A complete platform transformation using:
 
 ---
 
-## 🏗️ Repository Structure
+## Repository Structure
 
 ```
 tattler-restaurant-platform/
@@ -57,7 +57,7 @@ tattler-restaurant-platform/
 ├── package.json                 # Node.js dependencies
 └── README.md                    # This file
 ```
-## 🗄️ Database Schema
+## Database Schema
 
 ### Collections
 
@@ -138,7 +138,7 @@ Stores user comments and discussions about restaurants.
 
 ---
 
-## 🚀 Installation Instructions
+## Installation Instructions
 
 ### Prerequisites
 - Node.js (v14 or higher)
@@ -186,7 +186,7 @@ Check MongoDB Atlas to confirm collections and data are created successfully.
 
 ---
 
-## 📊 Usage Instructions
+## Usage Instructions
 
 ### Creating a Database Backup
 ```bash
@@ -210,7 +210,7 @@ To restore data from backup:
 
 ---
 
-## 🔧 Development Guidelines
+## Development Guidelines
 
 ### Version Control (XXX Versioning)
 This project follows semantic versioning with XXX format:
@@ -248,7 +248,7 @@ chore: maintenance tasks
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Manual Testing Checklist
 - [ ] MongoDB Atlas connection successful
@@ -277,7 +277,7 @@ db.restaurants.getIndexes()
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 This is a academic project for Digital NAO. For questions or issues:
 1. Check the documentation
@@ -286,13 +286,13 @@ This is a academic project for Digital NAO. For questions or issues:
 
 ---
 
-## 📄 License
+## License
 
 MIT License - See LICENSE file for details
 
 ---
 
-## 👥 Project Team
+## Project Team
 
 - **Project Manager**: Alejandra
 - **Lead Developer**: Elian
@@ -301,9 +301,9 @@ MIT License - See LICENSE file for details
 
 ---
 
-## 📅 Project Timeline
+## Project Timeline
 
-### Sprint 1 (Completed) ✅
+### Sprint 1 (Completed)
 - Database setup and configuration
 - MongoDB Atlas cluster creation
 - Collections and indexes implementation
@@ -322,7 +322,7 @@ MIT License - See LICENSE file for details
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
 - [MongoDB Node.js Driver](https://docs.mongodb.com/drivers/node/)
@@ -330,7 +330,7 @@ MIT License - See LICENSE file for details
 - [Git Best Practices](https://git-scm.com/book/en/v2)
 
 
-## 🔮 Future Enhancements
+## Future Enhancements
 
 - Automated backup scheduling
 - Data validation improvements
@@ -342,4 +342,4 @@ MIT License - See LICENSE file for details
 
 **Last Updated**: [08/10/2025]
 **Version**: 1.0.0
-**Status**: Sprint 1 Complete ✅
+**Status**: Sprint 1 Complete
