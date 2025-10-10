@@ -1,7 +1,7 @@
 
 # Tattler Restaurant Platform
 
-![Version](https://img.shields.io/badge/version-2.0.0-blue)
+![Version](https://img.shields.io/badge/version-2.0.2-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![Express](https://img.shields.io/badge/Express.js-4.18-lightgrey)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
@@ -488,7 +488,7 @@ This is an academic project for Digital NAO. For questions or issues:
 
 ## Version History
 
-### Version 2.0.1 (Sprint 2) - Current
+### Version 2.0.2 (Sprint 2) - Current
 - Added Express.js RESTful API
 - Implemented restaurant CRUD operations
 - Added rating system with automatic average calculation
@@ -524,5 +524,5 @@ This is an academic project for Digital NAO. For questions or issues:
 ---
 
 **Last Updated**: 10-10-2025  
-**Version**: 2.0.1  
+**Version**: 2.0.2  
 **Status**: Sprint 2 Complete 
