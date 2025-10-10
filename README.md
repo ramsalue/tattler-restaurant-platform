@@ -488,7 +488,7 @@ This is an academic project for Digital NAO. For questions or issues:
 
 ## Version History
 
-### Version 2.0.0 (Sprint 2) - Current
+### Version 2.0.1 (Sprint 2) - Current
 - Added Express.js RESTful API
 - Implemented restaurant CRUD operations
 - Added rating system with automatic average calculation
