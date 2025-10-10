@@ -95,7 +95,8 @@ tattler-restaurant-platform/
 │   └── backup/                      # Database backups
 │
 ├── tests/
-│   └── screenshots/                 # Postman test screenshots
+│   └── screenshots_sprint2/         # Postman test screenshots
+├── └── screenshots_sprint1/         # MongoDB Atlas screenshots
 │
 ├── docs/
 │   ├── SCHEMA.md                    # Database schema documentation
@@ -103,7 +104,6 @@ tattler-restaurant-platform/
 │   ├── API_DOCUMENTATION.md         # API endpoints documentation
 │   └── SPRINT2_SUMMARY.md           # Sprint 2 summary report
 │
-├── screenshots/                     # MongoDB Atlas screenshots
 ├── .env                             # Environment variables (not in repo)
 ├── .env.example                     # Environment template
 ├── .gitignore                       # Git ignore rules
