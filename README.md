@@ -524,5 +524,5 @@ This is an academic project for Digital NAO. For questions or issues:
 ---
 
 **Last Updated**: 10-10-2025  
-**Version**: 2.0.0  
+**Version**: 2.0.1  
 **Status**: Sprint 2 Complete 
