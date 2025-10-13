@@ -1,49 +1,50 @@
 // src/controllers/restaurantController.js
 
-// Import necessary modules from the mongodb driver, our database config, and error handler.
+// Import necessary modules from the mongodb driver,  database config, and error handler.
 const { ObjectId, Double, Int32 } = require('mongodb');
 const database = require('../config/database');
 const { AppError } = require('../middleware/errorHandler');
 
 /**
- * @desc    Get all restaurants with pagination
+ * @desc    Get all restaurants with filtering, sorting, and pagination
  * @route   GET /api/v1/restaurants
  * @access  Public
  */
-exports.getAllRestaurants = async (req, res, next) => {
+const getAllRestaurants = async (req, res, next) => {
   try {
     // Get the database instance from our singleton.
     const db = database.getDb();
 
-    // Get pagination parameters from the query string (e.g., ?limit=10&page=2)
-    // with default values if they are not provided.
-    const { limit = 20, page = 1 } = req.query;
+    // Build a filter object based on the query parameters using a helper function.
+    const filter = buildFilterQuery(req.query);
+    // Build a sort object based on the query parameters.
+    const sort = buildSortCriteria(req.query.sortBy, req.query.order);
 
-    // Calculate the number of documents to skip for pagination.
-    const skip = (parseInt(page) - 1) * parseInt(limit);
+    console.log('DEBUG: Generated Filter Object:', filter); // <-- ADD THIS LINE
 
-    // Query the database for restaurants, applying skip and limit for pagination.
-    const restaurants = await db.collection('restaurants')
-      .find({}) // An empty {} in find() means "match all documents".
-      .skip(skip)
-      .limit(parseInt(limit))
-      .toArray(); // Convert the result cursor to an array.
+    // Handle pagination
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 20;
+    const skip = (page - 1) * limit;
 
-    // Get the total count of all documents for pagination metadata.
-    const total = await db.collection('restaurants').countDocuments();
+    const restaurants = await db.collection('restaurants').find(filter).sort(sort).skip(skip).limit(limit).toArray();
 
-    // Send a successful JSON response.
-    res.status(200).json({
+    const total = await db.collection('restaurants').countDocuments(filter);
+
+    // Prepare response object with metadata.
+    const response = {
       status: 'success',
-      results: restaurants.length, // Number of results on the current page.
-      total, // Total number of restaurants in the database.
-      page: parseInt(page),
-      totalPages: Math.ceil(total / parseInt(limit)), // Calculate total pages.
-      data: {
-        restaurants
-      }
-    });
-  } catch (error) {
+      results: restaurants.length,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+      filters: req.query, // Echo back the filters used
+      sort: { field: req.query.sortBy || 'rating', order: req.query.order || 'desc' },
+      data: { restaurants }
+    };
+
+    res.status(200).json(response);
+   } catch (error) {
     // If any error occurs, pass it to the global error handler.
     next(error);
   }
@@ -54,14 +55,14 @@ exports.getAllRestaurants = async (req, res, next) => {
  * @route   GET /api/v1/restaurants/:id
  * @access  Public
  */
-exports.getRestaurantById = async (req, res, next) => {
+const getRestaurantById = async (req, res, next) => {
   try {
     const db = database.getDb();
-    // Get the 'id' from the URL parameters (e.g., /restaurants/some-id-value).
+    // Get the 'id' from the URL parameters (/restaurants/some-id-value).
     const { id } = req.params;
 
     // Find one document where the '_id' field matches the provided ID.
-    // We must convert the string 'id' from the URL into a MongoDB ObjectId.
+    // Must convert the string 'id' from the URL into a MongoDB ObjectId.
     const restaurant = await db.collection('restaurants')
       .findOne({ _id: new ObjectId(id) });
 
@@ -87,12 +88,12 @@ exports.getRestaurantById = async (req, res, next) => {
  * @route   POST /api/v1/restaurants
  * @access  Public (for now)
  */
-exports.createRestaurant = async (req, res, next) => {
+const createRestaurant = async (req, res, next) => {
   try {
     const db = database.getDb();
 
     // Construct a new restaurant document from the request body (req.body).
-    // We use || '' to provide default empty values and ensure correct BSON types.
+    // It's been uses || '' to provide default empty values and ensure correct BSON types.
     const newRestaurant = {
       name: req.body.name,
       cuisine: req.body.cuisine,
@@ -109,7 +110,6 @@ exports.createRestaurant = async (req, res, next) => {
       priceRange: req.body.priceRange || '$$',
       rating: new Double(0.0), // Initialize with a default rating.
       totalRatings: new Int32(0), // Initialize with zero ratings.
-      // ... (other fields with defaults)
       createdAt: new Date(),
       updatedAt: new Date()
     };
@@ -118,8 +118,7 @@ exports.createRestaurant = async (req, res, next) => {
     const result = await db.collection('restaurants').insertOne(newRestaurant);
 
     // Fetch the newly created document using the ID returned from the insert operation.
-    const restaurant = await db.collection('restaurants')
-      .findOne({ _id: result.insertedId });
+    const restaurant = await db.collection('restaurants').findOne({ _id: result.insertedId });
 
     // Send a 201 "Created" response with the new restaurant data.
     res.status(201).json({
@@ -138,7 +137,7 @@ exports.createRestaurant = async (req, res, next) => {
  * @route   PUT /api/v1/restaurants/:id
  * @access  Public (for now)
  */
-exports.updateRestaurant = async (req, res, next) => {
+const updateRestaurant = async (req, res, next) => {
   try {
     const db = database.getDb();
     const { id } = req.params;
@@ -176,7 +175,7 @@ exports.updateRestaurant = async (req, res, next) => {
  * @route   DELETE /api/v1/restaurants/:id
  * @access  Public (for now)
  */
-exports.deleteRestaurant = async (req, res, next) => {
+const deleteRestaurant = async (req, res, next) => {
   try {
     const db = database.getDb();
     const { id } = req.params;
@@ -203,4 +202,288 @@ exports.deleteRestaurant = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+/**
+ * @desc search restaurants using a text index
+ * @route GET /api/v1/restaurants/search
+ * @access Public
+ */
+const searchRestaurants = async(req, res, next) => {
+  try{
+    const db = database.getDb();
+    // Get the search term from the query string (supports both 'q' and 'query')
+    const{q, query, limit = 20, page=1, sortBy = "score", order = 'desc'} = req.query;
+    const searchTerm = q || query; 
+
+    // Return an error if th search is empty
+    if(!searchTerm || searchTerm.trim() === ''){
+      return next(new AppError('Search query is required', 400));
+    }
+
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+
+    // This is the core MongoDB text search query.
+    // It uses the text index that was created in Sprint 1.
+    const searchQuery = { $text: { $search: searchTerm } };
+
+    // The variable 'projection' tells MongoDB to include a special 'score' field
+    // that represents how relevant the result is to the search term.
+    const projection = {score: {$meta: "textScore"}};
+
+    // By default, it's sort by the relevance score
+    let sortCriteria = {score: {$meta: "textScore"}};
+    if (sortBy === 'rating'){
+      sortCriteria = {rating: order === 'asc' ? 1: -1};
+    }else if (sortBy === 'name'){
+      sortCriteria = {name: order === 'asc' ? 1 : -1};
+    }
+
+    const restaurants = await db.collection('restaurants').find(searchQuery, {projection})
+    .sort(sortCriteria).skip(skip).limit(parseInt(limit)).toArray();
+
+    const total = await db.collection('restaurants').countDocuments(searchQuery);
+
+    res.status(200).json({
+      status: 'success',
+      results: restaurants.length,
+      total,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / parseInt(limit)),
+      searchTerm,
+      data: { restaurants }
+    })
+  } catch (error){
+    next(error);
+  }
+}
+
+/**
+ * @desc    Get nearby restaurants using a geospatial query
+ * @route   GET /api/v1/restaurants/nearby
+ * @access  Public
+ */
+const getNearbyRestaurants = async (req, res, next) => {
+  try {
+    const db = database.getDb();
+    // Get coordinates and radius from the query string.
+    const { latitude, longitude, radius = 5, limit = 20 } = req.query; // Default radius to 5 km.
+
+    // Basic validation for required parameters.
+    if (!latitude || !longitude) {
+      return next(new AppError('Latitude and longitude are required query parameters', 400));
+    }
+
+    const lat = parseFloat(latitude);
+    const lng = parseFloat(longitude);
+
+    // This is the core MongoDB geospatial query.
+    const query = {
+      'location.coordinates': {
+        // $near finds documents near a specified point.
+        $near: {
+          // $geometry specifies the point in GeoJSON format.
+          $geometry: {
+            type: 'Point',
+            coordinates: [lng, lat]  // IMPORTANT: GeoJSON is always [longitude, latitude]
+          },
+          // $maxDistance specifies the search radius in meters.
+          $maxDistance: parseFloat(radius) * 1000  // Convert radius from km to meters.
+        }
+      }
+    };
+
+    const restaurants = await db.collection('restaurants')
+      .find(query)
+      .limit(parseInt(limit))
+      .toArray();
+
+    // The $near operator sorts the results by distance, but doesn't include the distance
+    // in the result. It is calculated for a more user-friendly.
+    const restaurantsWithDistance = restaurants.map(restaurant => {
+      const distance = calculateDistance(
+        lat, lng,
+        restaurant.location.coordinates.coordinates[1],  // restaurant's latitude
+        restaurant.location.coordinates.coordinates[0]   // restaurant's longitude
+      );
+
+      return {
+        ...restaurant,
+        distance: Math.round(distance * 100) / 100  // Round to 2 decimal places in km.
+      };
+    });
+
+    res.status(200).json({
+      status: 'success',
+      results: restaurantsWithDistance.length,
+      searchCenter: {
+        latitude: lat,
+        longitude: lng
+      },
+  radius: parseFloat(radius),
+      data: {
+        restaurants: restaurantsWithDistance
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+// Add this to src/controllers/restaurantController.js
+
+/**
+ * @desc    Get aggregated statistics about restaurants
+ * @route   GET /api/v1/restaurants/stats
+ * @access  Public
+ */
+const getRestaurantStats = async (req, res, next) => {
+  try {
+    const db = database.getDb();
+
+    // This is a MongoDB Aggregation Pipeline. It processes data in stages
+    // to return computed results.
+    const stats = await db.collection('restaurants').aggregate([
+      {
+        // The $facet stage allows to run multiple aggregation pipelines
+        // within a single stage on the same set of input documents.
+        $facet: {
+          // Pipeline 1: Group by cuisine and count.
+          byCuisine: [
+            { $group: { _id: '$cuisine', count: { $sum: 1 } } },
+            { $sort: { count: -1 } } // Sort by most common cuisine.
+          ],
+
+          // Pipeline 2: Group by price range and count.
+          byPriceRange: [
+            { $group: { _id: '$priceRange', count: { $sum: 1 } } },
+            { $sort: { _id: 1 } } // Sort by price range ($, $$, etc.).
+          ],
+
+          // Pipeline 3: Group by city and count.
+          byCity: [
+            { $group: { _id: '$location.city', count: { $sum: 1 } } },
+            { $sort: { count: -1 } }
+          ],
+
+          // Pipeline 4: Calculate overall rating statistics.
+          ratingStats: [
+            {
+              $group: {
+                _id: null, // Group all documents into one.
+                avgRating: { $avg: '$rating' },
+                minRating: { $min: '$rating' },
+                maxRating: { $max: '$rating' },
+                totalRestaurants: { $sum: 1 }
+              }
+            }
+          ],
+
+          // Pipeline 5: Find the top 5 highest-rated restaurants.
+          topRated: [
+            { $sort: { rating: -1 } },
+            { $limit: 5 },
+            // $project specifies which fields to include in the output.
+            { $project: { name: 1, cuisine: 1, rating: 1 } }
+          ]
+        }
+      }
+    ]).toArray();
+
+    res.status(200).json({
+      status: 'success',
+      data: {
+        // The result of a $facet pipeline is an array with a single document.
+        statistics: stats[0]
+      }
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * Helper function to calculate the distance between two coordinates in kilometers
+ * using the Haversine formula.
+ */
+function calculateDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // Earth's radius in kilometers
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = 
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function toRad(value) {
+  return value * Math.PI / 180;
+}
+
+/**
+ * Helper function to build a MongoDB filter query object from URL query parameters.
+ * It's used for getAllRestaurants
+ */
+function buildFilterQuery(params) {
+  const filter = {};
+
+  if (params.cuisine) filter.cuisine = params.cuisine;
+  if (params.city) filter['location.city'] = params.city;
+
+  // Handle multiple price ranges (?priceRange=$$,$$$)
+  if (params.priceRange) {
+    const priceRanges = params.priceRange.split(',').map(p => p.trim());
+    // If there's only one, it's a simple match. If multiple, use the '$in' operator.
+    filter.priceRange = priceRanges.length === 1 ? priceRanges[0] : { $in: priceRanges };
+  }
+
+  // Handle rating ranges (minRating=3&maxRating=4.5)
+  const ratingFilter = {};
+  if (params.minRating) ratingFilter.$gte = parseFloat(params.minRating); // $gte = greater than or equal to
+  if (params.maxRating) ratingFilter.$lte = parseFloat(params.maxRating); // $lte = less than or equal to
+  if (Object.keys(ratingFilter).length > 0) filter.rating = ratingFilter;
+
+  // Handle amenities (amenities=WiFi,Parking) - must have ALL specified.
+  if (params.amenities) {
+    const amenitiesList = params.amenities.split(',').map(a => a.trim());
+    filter.amenities = { $all: amenitiesList };
+  }
+
+  return filter;
+}
+
+/**
+ * Helper function to build a MongoDB sort object.
+ */
+function buildSortCriteria(sortBy, order) {
+  const sortOrder = order === 'asc' ? 1 : -1;
+
+  // A switch statement to handle different sort fields.
+  switch (sortBy) {
+    case 'name':
+      return { name: sortOrder };
+    case 'totalRatings':
+      return { totalRatings: sortOrder };
+    case 'priceRange':
+      return { priceRange: sortOrder };
+    case 'rating':
+    default: // Default sort is by rating, descending.
+      return { rating: -1 };
+  }
+}
+
+// src/controllers/restaurantController.js
+// These part of the code is causing some troubles***
+module.exports = {
+  getAllRestaurants,
+  getRestaurantById,
+  createRestaurant,
+  updateRestaurant,
+  deleteRestaurant,
+  searchRestaurants,
+  getNearbyRestaurants,
+  getRestaurantStats 
 };

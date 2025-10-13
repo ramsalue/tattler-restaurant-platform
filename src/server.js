@@ -8,12 +8,13 @@ const cors = require('cors');     // To allow cross-origin requests
 const bodyParser = require('body-parser'); // To parse incoming request bodies
 require('dotenv').config(); // To load environment variables
 
-// Import our custom modules
+// Import the custom modules
 const database = require('./config/database');
 const logger = require('./middleware/logger');
 const { errorHandler, notFound } = require('./middleware/errorHandler');
+const performanceMonitor = require('./middleware/performance');
 
-// Import our route files
+// Import the route files
 const restaurantRoutes = require('./routes/restaurantRoutes');
 
 // --- 2. INITIALIZE EXPRESS APP ---
@@ -36,8 +37,9 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Use our custom logger middleware for all incoming requests
+// Use the custom logger middleware for all incoming requests
 app.use(logger);
+//app.use(performanceMonitor); // To review the performance of the process
 
 // --- 4. API ROUTES ---
 // A simple health check route to confirm the API is running
@@ -50,7 +52,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Register our restaurant routes. All routes defined in restaurantRoutes.js
+// Register restaurant routes. All routes defined in restaurantRoutes.js
 // will now be available under the '/api/v1/restaurants' prefix.
 app.use(`/api/${process.env.API_VERSION}/restaurants`, restaurantRoutes);
 
@@ -63,14 +65,13 @@ app.get('/', (req, res) => {
 // These must be the LAST middleware registered.
 // Handle 404 Not Found errors for any routes that don't exist
 app.use(notFound);
-// Use our global error handler to catch and format all errors
+// Use the global error handler to catch and format all errors
 app.use(errorHandler);
 
 // --- 6. START THE SERVER ---
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || 'localhost';
 
-// We create an async function so we can connect to the database BEFORE starting the server.
 async function startServer() {
   try {
     // Connect to the database

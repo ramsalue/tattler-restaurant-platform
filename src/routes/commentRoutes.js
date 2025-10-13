@@ -3,7 +3,6 @@ const express = require('express');
 const commentController = require('../controllers/commentController');
 const { commentValidation, validateObjectId } = require('../middleware/validators');
 
-// Again, { mergeParams: true } is required to access :restaurantId from the parent router.
 const router = express.Router({ mergeParams: true });
 
 // Define routes for comments.

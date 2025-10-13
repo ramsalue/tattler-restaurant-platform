@@ -1,0 +1,1577 @@
+{
+	"info": {
+		"_postman_id": "fb79ea6b-9eae-43fb-9c09-6e270bce22e8",
+		"name": "Tattler Restaurant API - Sprint 2",
+		"description": "Challenge 04 - Sprint 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48954560",
+		"_collection_link": "https://ramsalue-5809832.postman.co/workspace/Luis-E.-Ramirez-(ramsalue)'s-Wo~cdc23105-5285-4ecc-85bf-8776dac31a99/collection/48954560-fb79ea6b-9eae-43fb-9c09-6e270bce22e8?action=share&source=collection_link&creator=48954560"
+	},
+	"item": [
+		{
+			"name": "Health & Info",
+			"item": [
+				{
+					"name": "Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has success status\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "API welcome",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Restaurants",
+			"item": [
+				{
+					"name": "Get All restaurants",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// This part of the script gets the response data, finds the ID of the first restaurant,\r",
+									"// and saves it to the 'restaurant_id' variable in the active environment.\r",
+									"pm.test(\"Save first restaurant ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    if (jsonData.data.restaurants.length > 0) {\r",
+									"        pm.environment.set(\"restaurant_id\", jsonData.data.restaurants[0]._id);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get restaurant by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new restaurant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Restaurant was created and ID saved\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.restaurant).to.have.property('_id');\r",
+									"    // This overwrites the 'restaurant_id' with the one we just created.\r",
+									"    pm.environment.set(\"restaurant_id\", jsonData.data.restaurant._id);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Test Restaurant via Postman\",\r\n  \"cuisine\": \"Italian\",\r\n  \"location\": {\r\n    \"address\": \"456 Test Street\",\r\n    \"city\": \"Test City\",\r\n    \"coordinates\": {\r\n      \"latitude\": 20.0,\r\n      \"longitude\": -100.0\r\n    }\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update restaurant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Updated Test Restaurant Name\",\r\n  \"priceRange\": \"$$$\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete restaurant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ratings",
+			"item": [
+				{
+					"name": "Get Restaurants ratings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}/ratings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create rating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Rating was created and ID saved\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.rating).to.have.property('_id');\r",
+									"    pm.environment.set(\"rating_id\", jsonData.data.rating._id);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"testuser001\",\r\n  \"rating\": 5,\r\n  \"review\": \"Excellent food and service! Highly recommended.\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}/ratings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}",
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update rating",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"rating\": 4,\r\n  \"review\": \"Updated review: Still great but slightly expensive\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}/ratings/{{rating_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}",
+								"ratings",
+								"{{rating_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete rating",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}/ratings/{{rating_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}",
+								"ratings",
+								"{{rating_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Get restaurants comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}/comments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Comment was created and ID saved\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.comment).to.have.property('_id');\r",
+									"    pm.environment.set(\"comment_id\", jsonData.data.comment._id);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"testuser001\",\r\n  \"username\": \"John Doe\",\r\n  \"comment\": \"Great atmosphere and friendly staff!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}/comments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}",
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update comment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"comment\": \"Updated comment: Absolutely loved the experience!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}/comments/{{comment_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}",
+								"comments",
+								"{{comment_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete comment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/{{restaurant_id}}/comments/{{comment_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"{{restaurant_id}}",
+								"comments",
+								"{{comment_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sprint 3 - Search and filtering",
+			"item": [
+				{
+					"name": "Basic text search",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Results array exists\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.restaurants).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/search?q=Mexican",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "Mexican"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search with no results",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Results is 0\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.results).to.equal(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/search?q=xyz123nonexistent",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "xyz123nonexistent"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search with sorting",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Results are sorted by rating descending\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var restaurants = jsonData.data.restaurants;\r",
+									"\r",
+									"    for (var i = 0; i < restaurants.length - 1; i++) {\r",
+									"        pm.expect(restaurants[i].rating).to.be.at.least(restaurants[i + 1].rating);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/search?q=restaurant&sortBy=rating&order=desc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "restaurant"
+								},
+								{
+									"key": "sortBy",
+									"value": "rating"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by cuisine",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All results are Mexican cuisine\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.data.restaurants.forEach(function(restaurant) {\r",
+									"        pm.expect(restaurant.cuisine).to.equal('Mexican');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?cuisine=Mexican",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "cuisine",
+									"value": "Mexican"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by price range",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All results match price range\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.data.restaurants.forEach(function(restaurant) {\r",
+									"        pm.expect(restaurant.priceRange).to.equal('$$');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?priceRange=$$",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "priceRange",
+									"value": "$$"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by multiple price ranges",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Results match multiple price ranges\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.data.restaurants.forEach(function(restaurant) {\r",
+									"        pm.expect(['$$', '$$$']).to.include(restaurant.priceRange);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?priceRange=$$,$$$",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "priceRange",
+									"value": "$$,$$$"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by minimum rating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All results have rating >= 4.0\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.data.restaurants.forEach(function(restaurant) {\r",
+									"        pm.expect(restaurant.rating).to.be.at.least(4.0);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?minRating=4.0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "minRating",
+									"value": "4.0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by city",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All results are in Mexico City\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.data.restaurants.forEach(function(restaurant) {\r",
+									"        pm.expect(restaurant.location.city).to.equal('Mexico City');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?city=Mexico City",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "city",
+									"value": "Mexico City"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multiple filters combined",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"All results match all filters\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.data.restaurants.forEach(function(restaurant) {\r",
+									"        pm.expect(restaurant.cuisine).to.equal('Mexican');\r",
+									"        pm.expect(restaurant.priceRange).to.equal('$$');\r",
+									"        pm.expect(restaurant.rating).to.be.at.least(0.0);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?cuisine=Mexican&priceRange=$$&minRating=0.0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "cuisine",
+									"value": "Mexican"
+								},
+								{
+									"key": "priceRange",
+									"value": "$$"
+								},
+								{
+									"key": "minRating",
+									"value": "0.0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sort by name ascending",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Results sorted alphabetically\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var restaurants = jsonData.data.restaurants;\r",
+									"\r",
+									"    for (var i = 0; i < restaurants.length - 1; i++) {\r",
+									"        var isSorted = restaurants[i].name.toLowerCase() <= restaurants[i + 1].name.toLowerCase();\r",
+									"        pm.expect(isSorted).to.be.true;\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Sort metadata included\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.sort.field).to.equal('name');\r",
+									"    pm.expect(jsonData.sort.order).to.equal('asc');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?sortBy=name&order=asc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "name"
+								},
+								{
+									"key": "order",
+									"value": "asc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Sort by name descending",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// This test loops through the results and checks that each restaurant's rating\r",
+									"// is greater than or equal to the next one's rating.\r",
+									"pm.test(\"Results sorted by rating desc\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var restaurants = jsonData.data.restaurants;\r",
+									"\r",
+									"    for (var i = 0; i < restaurants.length - 1; i++) {\r",
+									"        pm.expect(restaurants[i].rating).to.be.at.least(restaurants[i + 1].rating);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?sortBy=rating&order=desc",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "rating"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nearby restaurants",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// This test confirms that the response includes the coordinates searched from.\r",
+									"pm.test(\"Search center coordinates are returned\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.searchCenter).to.exist;\r",
+									"    pm.expect(jsonData.searchCenter.latitude).to.equal(19.4326);\r",
+									"});\r",
+									"\r",
+									"// This test loops through each result to ensure the 'distance' field was calculated and added.\r",
+									"pm.test(\"All restaurants have a distance property\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.data.restaurants.forEach(function(restaurant) {\r",
+									"        pm.expect(restaurant.distance).to.exist;\r",
+									"        pm.expect(restaurant.distance).to.be.a('number');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/nearby?latitude=19.4326&longitude=-99.1332&radius=100",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"nearby"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "19.4326"
+								},
+								{
+									"key": "longitude",
+									"value": "-99.1332"
+								},
+								{
+									"key": "radius",
+									"value": "100"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Nearby with filters",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// In addition to being nearby, this test checks if every result\r",
+									"// also matches the cuisine filter that was added.\r",
+									"pm.test(\"All results match the additional filters\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    jsonData.data.restaurants.forEach(function(restaurant) {\r",
+									"        pm.expect(restaurant.cuisine).to.equal('Mexican');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/nearby?latitude=19.4326&longitude=-99.1332&radius=100&cuisine=Mexican",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"nearby"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "19.4326"
+								},
+								{
+									"key": "longitude",
+									"value": "-99.1332"
+								},
+								{
+									"key": "radius",
+									"value": "100"
+								},
+								{
+									"key": "cuisine",
+									"value": "Mexican"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restaurant statistics",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"// This test checks that all the main statistical categories created\r",
+									"// in the aggregation pipeline are present in the response.\r",
+									"pm.test(\"Statistics structure is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    var stats = jsonData.data.statistics;\r",
+									"\r",
+									"    pm.expect(stats).to.have.property('byCuisine');\r",
+									"    pm.expect(stats).to.have.property('byPriceRange');\r",
+									"    pm.expect(stats).to.have.property('byCity');\r",
+									"    pm.expect(stats).to.have.property('ratingStats');\r",
+									"    pm.expect(stats).to.have.property('topRated');\r",
+									"});\r",
+									"\r",
+									"// This test drills down to make sure one of the categories has data.\r",
+									"pm.test(\"Cuisine statistics exist\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.data.statistics.byCuisine).to.be.an('array');\r",
+									"    pm.expect(jsonData.data.statistics.byCuisine.length).to.be.above(0);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/stats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Complex combined query",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Pagination metadata correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.page).to.equal(1);\r",
+									"    pm.expect(jsonData.results).to.be.at.most(5);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?cuisine=Mexican&city=Mexico City&priceRange=$$&minRating=3.5&sortBy=rating&order=desc&limit=5&page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "cuisine",
+									"value": "Mexican"
+								},
+								{
+									"key": "city",
+									"value": "Mexico City"
+								},
+								{
+									"key": "priceRange",
+									"value": "$$"
+								},
+								{
+									"key": "minRating",
+									"value": "3.5"
+								},
+								{
+									"key": "sortBy",
+									"value": "rating"
+								},
+								{
+									"key": "order",
+									"value": "desc"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Error - Invalid Search Query (Empty)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validation errors array is present\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.equal('fail');\r",
+									"    pm.expect(jsonData.errors).to.exist;\r",
+									"    pm.expect(jsonData.errors).to.be.an('array');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/search?q=",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Error - Invalid Latitude",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Validation error is returned\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.equal('fail');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/nearby?latitude=999&longitude=-99.1332",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"nearby"
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "999"
+								},
+								{
+									"key": "longitude",
+									"value": "-99.1332"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Error - Invalid sort parameter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Validation error for sortBy exists\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?sortBy=invalidField",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "sortBy",
+									"value": "invalidField"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Error - Invalid rating range",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Error message about rating range\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.errors[0].msg).to.include('minRating');\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?minRating=5&maxRating=3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "minRating",
+									"value": "5"
+								},
+								{
+									"key": "maxRating",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Performance - Response time check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time under 200ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants?limit=8",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Performance - Cache test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/{{api_version}}/restaurants/stats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"{{api_version}}",
+								"restaurants",
+								"stats"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -37,8 +37,7 @@ If the Digital NAO team encounters any access issues:
 
 ## Repository Statistics
 
-- **Version**: 1.0.0
+- **Version**: 2.1.0
 - **Sprint**: 1 (Database Setup)
-- **Last Updated**: 08/10/2025
-- **Total Commits**: PENDING
+- **Last Updated**: 12/10/2025
 - **Files**: ~15+

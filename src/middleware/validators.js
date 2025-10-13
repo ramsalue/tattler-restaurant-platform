@@ -154,38 +154,74 @@ const commentValidation = {
 
 /**
  * Search and Filter Validation Rules
+ * This object contains an array of validation rules for all the new query parameters.
  */
 const searchValidation = {
   query: [
-    query('query')
+    // Rules for the text search term ('q' or 'query')
+    query('q').optional().trim().isLength({ min: 1 }),
+    query('query').optional().trim().isLength({ min: 1 }),
+
+    // Rules for the filter parameters
+    query('cuisine').optional().trim(),
+    query('city').optional().trim(),
+
+    // Use a regular expression to validate the priceRange format ("$$" or "$$,$$$")
+    query('priceRange').optional().trim().matches(/^(\$|\$\$|\$\$\$|\$\$\$\$)(,(\$|\$\$|\$\$\$|\$\$\$\$))*$/)
+      .withMessage('Invalid priceRange format. Use $, $$, etc., comma-separated for multiple.'),
+
+    query('minRating').optional().isFloat({ min: 0, max: 5 }),
+    query('maxRating').optional().isFloat({ min: 0, max: 5 }),
+
+    // Rules for sorting parameters
+    query('sortBy').optional().isIn(['name', 'rating', 'totalRatings', 'priceRange', 'score'])
+      .withMessage('Invalid sortBy value.'),
+
+    query('order').optional().isIn(['asc', 'desc'])
+      .withMessage('Order must be asc or desc.'),
+
+    // Rule for pagination
+    query('limit').optional().isInt({ min: 1, max: 100 }),
+    query('page').optional().isInt({ min: 1 }),
+
+    // A custom validator to ensure minRating is not greater than maxRating
+    query('minRating').custom((value, { req }) => {
+        if (value && req.query.maxRating && (parseFloat(value) > parseFloat(req.query.maxRating))) {
+            throw new Error('minRating cannot be greater than maxRating');
+        }
+        return true;
+    }),
+
+    validate // This runs all the checks
+  ]
+};
+
+/**
+ * Geospatial Search Validation Rules
+ */
+const geoSearchValidation = {
+  nearby: [
+    // Rule: latitude is required and must be a valid float.
+    query('latitude')
+      .notEmpty().withMessage('Latitude is required')
+      .isFloat({ min: -90, max: 90 }).withMessage('Latitude must be between -90 and 90'),
+
+    // Rule: longitude is required and must be a valid float.
+    query('longitude')
+      .notEmpty().withMessage('Longitude is required')
+      .isFloat({ min: -180, max: 180 }).withMessage('Longitude must be between -180 and 180'),
+
+    // Rule: radius is optional but if present, must be a float in a reasonable range.
+    query('radius')
       .optional()
-      .trim(),
-    
-    query('cuisine')
-      .optional()
-      .trim(),
-    
-    query('city')
-      .optional()
-      .trim(),
-    
-    query('priceRange')
-      .optional()
-      .isIn(['$', '$$', '$$$', '$$$$']).withMessage('Invalid price range'),
-    
-    query('minRating')
-      .optional()
-      .isFloat({ min: 0, max: 5 }).withMessage('Minimum rating must be between 0 and 5'),
-    
-    query('limit')
-      .optional()
-      .isInt({ min: 1, max: 100 }).withMessage('Limit must be between 1 and 100'),
-    
-    query('page')
-      .optional()
-      .isInt({ min: 1 }).withMessage('Page must be a positive integer'),
-    
-    validate
+      .isFloat({ min: 0.1, max: 100 }).withMessage('Radius must be between 0.1 and 100 km'),
+
+    // Re-use existing validation rules for limit, minRating, etc.
+    query('limit').optional().isInt({ min: 1, max: 100 }),
+    query('minRating').optional().isFloat({ min: 0, max: 5 }),
+    query('cuisine').optional().trim(),
+
+    validate // Run all the checks.
   ]
 };
 
@@ -195,5 +231,6 @@ module.exports = {
   restaurantValidation,
   ratingValidation,
   commentValidation,
-  searchValidation
+  searchValidation,
+  geoSearchValidation
 };

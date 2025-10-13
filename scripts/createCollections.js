@@ -38,12 +38,22 @@ async function createCollections() {
                 state: { bsonType: 'string' },
                 zipCode: { bsonType: 'string' },
                 coordinates: {
-                  bsonType: 'object',
-                  required: ['latitude', 'longitude'],
+                  bsonType: "object",
+                  required: ["type", "coordinates"],
                   properties: {
-                    latitude: { bsonType: 'double' },
-                    longitude: { bsonType: 'double' }
-                  }
+                    "type": {
+                      "bsonType": "string",
+                      "enum": ["Point"]
+                    },
+                    "coordinates": {
+                      "bsonType": "array",
+                      "minItems": 2,
+                      "maxItems": 2,
+                      "items": {
+                        "bsonType": "double"
+                      }
+                    }
+                   }
                 }
               }
             },
@@ -87,7 +97,7 @@ async function createCollections() {
       { key: { cuisine: 1 } },
       { key: { rating: -1 } },
       { key: { priceRange: 1 } },
-      { key: { 'location.coordinates.latitude': 1, 'location.coordinates.longitude': 1 } }
+      { key: { 'location.coordinates': '2dsphere' } }
     ]);
     console.log('Created indexes for restaurants');
 

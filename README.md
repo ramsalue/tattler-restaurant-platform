@@ -1,63 +1,74 @@
-
 # Tattler Restaurant Platform
 
-![Version](https://img.shields.io/badge/version-2.0.2-blue)
+![Version](https://img.shields.io/badge/version-2.1.0-blue)
 ![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 ![Express](https://img.shields.io/badge/Express.js-4.18-lightgrey)
+![Node.js](https://img.shields.io/badge/Node.js-18+-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-yellow)
 
-## Project Description
+##  Project Description
 
-Tattler is a modern restaurant directory platform with a RESTful API built using Express.js and MongoDB. The platform enables users to discover restaurants, rate their experiences, leave comments, and receive personalized recommendations.
-
-### Problem Statement
-The original Tattler platform experienced a significant drop in user traffic due to outdated restaurant information and lack of personalization. This project revitalizes the platform by implementing:
-- Real-time, up-to-date restaurant data
-- User-driven content through ratings and reviews
-- RESTful API for easy integration
-- Comprehensive search and filtering capabilities
-
-### Solution Architecture
-- **Backend**: Express.js RESTful API
-- **Database**: MongoDB Atlas (NoSQL)
-- **API Version**: v1
-- **Data Format**: JSON
-- **Authentication**: To be implemented in Sprint 3
+Tattler is a modern restaurant directory platform with an advanced RESTful API built using Express.js and MongoDB. The platform enables users to discover restaurants through powerful search and filtering capabilities, view ratings and comments, and find nearby dining options using geospatial queries.
 
 ---
 
-## Features
+##  Features
 
-### Sprint 1 (Completed)
--  MongoDB Atlas database configuration
--  Database schema design with validation
--  Collections: restaurants, users, ratings, comments
--  Text and geospatial indexes
--  CSV data import scripts
--  Database backup system
+### Sprint 1 (Completed) 
+- MongoDB Atlas database configuration
+- Database schema design with validation
+- Collections: restaurants, users, ratings, comments
+- Text and geospatial indexes
+- CSV data import scripts
+- Database backup system
 
-### Sprint 2 (Current)
--  RESTful API with Express.js
--  Full CRUD operations for restaurants
--  Rating system with automatic average calculation
--  Comment management system
--  Input validation with express-validator
--  Error handling middleware
--  Request logging with Morgan
--  Security headers with Helmet
--  CORS configuration
--  Comprehensive API testing with Postman
+### Sprint 2 (Completed) 
+- RESTful API with Express.js
+- Full CRUD operations for restaurants
+- Rating system with automatic average calculation
+- Comment management system
+- Input validation with express-validator
+- Error handling middleware
+- Security headers with Helmet
+- CORS configuration
+- Request logging
+- Comprehensive API testing
 
-### Sprint 3 (Upcoming)
--  Advanced search functionality
--  Multi-parameter filtering
--  Sorting and pagination enhancements
--  Personalized recommendations
--  User authentication with JWT
+### Sprint 3 (Current) 
+- **Advanced Text Search**
+  - Search by restaurant name, cuisine, or description
+  
+- **Multi-Parameter Filtering**
+  - Filter by cuisine type
+  - Filter by city/location
+  - Filter by price range (single or multiple)
+  - Filter by rating range (min/max)
+  - Combine multiple filters
+  
+- **Flexible Sorting**
+  - Sort by name (A-Z or Z-A)
+  - Sort by rating (highest/lowest)
+  - Sort by price range
+  
+- **Geospatial Search**
+  - Find restaurants near a location
+  - Distance-based filtering (radius in km)
+
+  
+- **Statistics & Analytics**
+  - Restaurant counts by cuisine
+  - Distribution by price range
+  - Distribution by city
+  - Average ratings and statistics
+  - Top-rated restaurants
+  
+- **Performance Optimizations**
+  - In-memory caching for frequent queries
+  - Response time monitoring
+  - Query performance tracking
 
 ---
-
-## Updated Repository Structure
+### Updated Repository Structure
 
 ```
 tattler-restaurant-platform/
@@ -71,11 +82,14 @@ tattler-restaurant-platform/
 │   │   ├── restaurantController.js  # Restaurant CRUD operations
 │   │   ├── ratingController.js      # Rating management
 │   │   └── commentController.js     # Comment management
+│   │   └── testController.js        # testController
 │   │
 │   ├── middleware/
 │   │   ├── errorHandler.js          # Global error handling
 │   │   ├── validators.js            # Input validation rules
 │   │   └── logger.js                # Request logging
+│   │   └── cache.js                 # Cache
+│   │   └── performance.js           # X-Response-Time
 │   │
 │   ├── routes/
 │   │   ├── restaurantRoutes.js      # Restaurant endpoints
@@ -88,21 +102,34 @@ tattler-restaurant-platform/
 │   ├── dbConnection.js              # Legacy DB connection
 │   ├── createCollections.js         # Collection creation script
 │   ├── importData.js                # CSV import script
-│   └── backupDatabase.js            # Database backup script
+│   ├── analyzeQueries.js            # AnalyzeQueryPerformance
+│   ├── backupDatabase.js            # Database backup script
+│   └── checkIndexes.js              # Get a list of all indexes on the collection.
+│   ├── codeQualityCheck.js          # Review files on repository
+│   ├── finalSystemTest.js           # Script to test some endpoints
+│   ├── loadTest.js                  # Tests MongoDB to with 10 requests
+│   ├── migrateToGeoJSON.js          # Transforming data to a different format
+│   └── performanceTest.js           # Performance test
 │
 ├── data/
 │   ├── csv/                         # Source CSV files
 │   └── backup/                      # Database backups
 │
 ├── tests/
-│   └── screenshots_sprint2/         # Postman test screenshots
-├── └── screenshots_sprint1/         # MongoDB Atlas screenshots
+│   ├── screenshots_sprint1/         # MongoDB Atlas screenshots
+│   ├── screenshots_sprint2/         # Postman test screenshots
+│   ├── screenshots_sprint3/         # Postamn test and performance screenshots
+│   └── JSON Collections             # JSON files with collections for Postman
 │
 ├── docs/
 │   ├── SCHEMA.md                    # Database schema documentation
-│   ├── IMPORT_GUIDE.md              # Data import guide
 │   ├── API_DOCUMENTATION.md         # API endpoints documentation
-│   └── SPRINT2_SUMMARY.md           # Sprint 2 summary report
+│   ├── COLLABORATORS.md             # Collaborators
+│   ├── PERFORMANCE_REPORT.md        # Performance report
+│   ├── SPRINT3_FEAUTURES.md         # Planeation for Sprint 3
+│   ├── PEER_REVIEW.md               # Format for peer review
+│   ├── SPRINT2_SUMMARY.md           # Sprint 2 summary report
+│   └── SPRINT3_SUMMARY.md           # Sprint 3 summary report
 │
 ├── .env                             # Environment variables (not in repo)
 ├── .env.example                     # Environment template
@@ -110,419 +137,307 @@ tattler-restaurant-platform/
 ├── package.json                     # Node.js dependencies
 └── README.md                        # This file
 ```
-## Database Schema
 
-### Collections
-
-#### 1. Restaurants Collection
-Stores restaurant information including location, cuisine, ratings, and amenities.
-
-**Fields:**
-- `name` (string, required): Restaurant name
-- `cuisine` (string, required): Type of cuisine
-- `location` (object, required):
-  - `address` (string)
-  - `city` (string)
-  - `state` (string)
-  - `zipCode` (string)
-  - `coordinates` (object):
-    - `latitude` (double)
-    - `longitude` (double)
-- `priceRange` (string): $, $$, $$$, or $$$$
-- `rating` (double): Average rating (0-5)
-- `totalRatings` (int): Number of ratings
-- `amenities` (array): Available amenities
-- `phone` (string): Contact phone
-- `website` (string): Restaurant website
-- `description` (string): Restaurant description
-- `images` (array): Image URLs
-- `openingHours` (object): Operating hours
-- `createdAt` (date): Creation timestamp
-- `updatedAt` (date): Last update timestamp
-
-**Indexes:**
-- Text index on: name, cuisine, description
-- Single field indexes on: location.city, cuisine, rating, priceRange
-- Geospatial index on: location.coordinates
-
-#### 2. Users Collection
-Stores user profiles and preferences for personalization.
-
-**Fields:**
-- `userId` (string, required, unique): User identifier
-- `email` (string, required, unique): User email
-- `username` (string): Display name
-- `preferences` (object):
-  - `favoriteCuisines` (array): Preferred cuisines
-  - `preferredPriceRange` (array): Price preferences
-  - `dietaryRestrictions` (array): Dietary needs
-- `favoriteRestaurants` (array): Saved restaurant IDs
-- `createdAt` (date): Account creation date
-
-**Indexes:**
-- Unique index on: userId, email
-
-#### 3. Ratings Collection
-Stores individual user ratings for restaurants.
-
-**Fields:**
-- `restaurantId` (ObjectId, required): Reference to restaurant
-- `userId` (string, required): User who rated
-- `rating` (int, required): Rating value (1-5)
-- `review` (string): Optional review text
-- `createdAt` (date): Rating timestamp
-
-**Indexes:**
-- Single field indexes on: restaurantId, userId, createdAt
-
-#### 4. Comments Collection
-Stores user comments and discussions about restaurants.
-
-**Fields:**
-- `restaurantId` (ObjectId, required): Reference to restaurant
-- `userId` (string, required): Comment author
-- `username` (string): Author's display name
-- `comment` (string, required): Comment text
-- `createdAt` (date): Comment timestamp
-- `updatedAt` (date): Last edit timestamp
-
-**Indexes:**
-- Single field indexes on: restaurantId, userId, createdAt
-
----
-
-## Installation & Setup
+##  Quick Start
 
 ### Prerequisites
 - Node.js v18+ installed
 - npm v6+ installed
 - MongoDB Atlas account
 - Git installed
-- Postman or Insomnia (for API testing)
+- Postman or Insomnia (for API testing). The current project was testing usign Postman.
 
-### Step 1: Clone the Repository
+### Installation
+
 ```bash
+# Clone repository
 git clone https://github.com/ramsalue/tattler-restaurant-platform.git
 cd tattler-restaurant-platform
-```
 
-### Step 2: Install Dependencies
-```bash
+# Install dependencies
 npm install
-```
 
-### Step 3: Configure Environment Variables
-1. Copy the example environment file:
-   ```bash
-   cp .env.example .env
-   ```
+# Configure environment
+cp .env.example .env
+# Edit .env with your MongoDB connection string
 
-2. Edit `.env` and add your MongoDB Atlas connection string:
-   ```env
-   # MongoDB Configuration
-   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/tattler_db
-   DB_NAME=tattler_db
-   
-   # API Configuration
-   PORT=3000
-   NODE_ENV=development
-   API_VERSION=v1
-   
-   # Server Configuration
-   HOST=localhost
-   ALLOWED_ORIGINS=http://localhost:3000
-   ```
-
-### Step 4: Set Up Database (First Time Only)
-```bash
-# Create collections and indexes
+# Set up database (first time only)
 npm run create-collections
-
-# Import sample data
 npm run import-data
-```
 
-### Step 5: Start the Server
-```bash
-# Development mode (with auto-reload)
+# Start server
 npm run dev
-
-# Production mode
-npm start
 ```
 
-The API will be available at: `http://localhost:3000`
+Server will be available at: `http://localhost:3000`
 
 ---
 
-## API Documentation
+## API Endpoints
 
 ### Base URL
 ```
 http://localhost:3000/api/v1
 ```
 
-### API Endpoints
-
-#### Health Check
-```http
-GET /health
-```
-Returns API health status.
-
-#### Restaurants
+### Search & Discovery
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/restaurants` | Get all restaurants (paginated) |
+| GET | `/restaurants` | Get all restaurants with filtering and sorting |
+| GET | `/restaurants/search` | Text search across name, cuisine, description |
+| GET | `/restaurants/nearby` | Find restaurants near coordinates |
+| GET | `/restaurants/stats` | Get restaurant statistics |
 | GET | `/restaurants/:id` | Get single restaurant by ID |
+
+### Restaurant Management
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
 | POST | `/restaurants` | Create new restaurant |
 | PUT | `/restaurants/:id` | Update restaurant |
 | DELETE | `/restaurants/:id` | Delete restaurant |
 
-**Query Parameters for GET /restaurants:**
-- `limit` (default: 20): Number of results per page
-- `page` (default: 1): Page number
+### Ratings & Comments
 
-**Example Request:**
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/restaurants/:id/ratings` | Get restaurant ratings |
+| POST | `/restaurants/:id/ratings` | Add rating |
+| PUT | `/restaurants/:id/ratings/:ratingId` | Update rating |
+| DELETE | `/restaurants/:id/ratings/:ratingId` | Delete rating |
+| GET | `/restaurants/:id/comments` | Get restaurant comments |
+| POST | `/restaurants/:id/comments` | Add comment |
+| PUT | `/restaurants/:id/comments/:commentId` | Update comment |
+| DELETE | `/restaurants/:id/comments/:commentId` | Delete comment |
+
+---
+
+## API Usage Examples
+
+### Text Search
 ```bash
-curl http://localhost:3000/api/v1/restaurants?limit=10&page=1
+# Search for restaurants
+GET /api/v1/restaurants/search?q=pizza
+
+# Search with sorting
+GET /api/v1/restaurants/search?q=Mexican&sortBy=rating&order=desc
 ```
 
-**Example POST Body:**
+### Advanced Filtering
+```bash
+# Filter by cuisine
+GET /api/v1/restaurants?cuisine=Italian
+
+# Multiple filters
+GET /api/v1/restaurants?cuisine=Mexican&priceRange=$$&minRating=4.0
+
+# Filter by multiple price ranges
+GET /api/v1/restaurants?priceRange=$$,$$$
+
+# Filter by city and amenities
+GET /api/v1/restaurants?city=Mexico City&amenities=WiFi,Parking
+```
+
+### Sorting
+```bash
+# Sort by rating (highest first)
+GET /api/v1/restaurants?sortBy=rating&order=desc
+
+# Sort by name alphabetically
+GET /api/v1/restaurants?sortBy=name&order=asc
+
+# Sort by popularity
+GET /api/v1/restaurants?sortBy=totalRatings&order=desc
+```
+
+### Geospatial Search
+```bash
+# Find nearby restaurants (within 5km)
+GET /api/v1/restaurants/nearby?latitude=19.4326&longitude=-99.1332&radius=5
+
+# Nearby with filters
+GET /api/v1/restaurants/nearby?latitude=19.4326&longitude=-99.1332&radius=10&minRating=4&cuisine=Mexican
+```
+
+### Combined Query Example
+```bash
+# Search + Filter + Sort + Paginate
+GET /api/v1/restaurants?cuisine=Italian&city=Mexico City&priceRange=$$,$$$&minRating=4.0&sortBy=rating&order=desc&limit=10&page=1
+```
+
+### Statistics
+```bash
+# Get restaurant statistics
+GET /api/v1/restaurants/stats
+```
+
+---
+
+##  Query Parameters Reference
+
+### Common Parameters
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `limit` | integer | Results per page (1-100) | `limit=20` |
+| `page` | integer | Page number (≥1) | `page=2` |
+| `sortBy` | string | Sort field | `sortBy=rating` |
+| `order` | string | Sort order (asc/desc) | `order=desc` |
+
+### Filter Parameters
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `cuisine` | string | Cuisine type | `cuisine=Mexican` |
+| `city` | string | City name | `city=Mexico City` |
+| `priceRange` | string | Price range ($-$$$$) | `priceRange=$$` |
+| `minRating` | number | Minimum rating (0-5) | `minRating=4.0` |
+| `maxRating` | number | Maximum rating (0-5) | `maxRating=5.0` |
+| `amenities` | string | Comma-separated list | `amenities=WiFi,Parking` |
+
+### Search Parameters
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `q` or `query` | string | Search term | `q=taco` |
+
+### Geospatial Parameters
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `latitude` | number | Latitude (-90 to 90) | `latitude=19.4326` |
+| `longitude` | number | Longitude (-180 to 180) | `longitude=-99.1332` |
+| `radius` | number | Search radius in km | `radius=5` |
+
+---
+
+##  Response Format
+
+### Success Response
 ```json
 {
-  "name": "New Restaurant",
-  "cuisine": "Mexican",
-  "location": {
-    "address": "123 Main St",
-    "city": "Mexico City",
-    "state": "CDMX",
-    "zipCode": "01000",
-    "coordinates": {
-      "latitude": 19.4326,
-      "longitude": -99.1332
-    }
+  "status": "success",
+  "results": 5,
+  "total": 23,
+  "page": 1,
+  "totalPages": 5,
+  "filters": {
+    "cuisine": "Mexican",
+    "minRating": 4.0
   },
-  "priceRange": "$$",
-  "phone": "555-0123",
-  "website": "www.newrestaurant.com",
-  "description": "Authentic Mexican cuisine"
+  "sort": {
+    "field": "rating",
+    "order": "desc"
+  },
+  "data": {
+    "restaurants": [ /* array of restaurants */ ]
+  }
 }
 ```
 
-#### Ratings
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/restaurants/:restaurantId/ratings` | Get all ratings for a restaurant |
-| GET | `/restaurants/:restaurantId/ratings/:ratingId` | Get single rating |
-| POST | `/restaurants/:restaurantId/ratings` | Create new rating |
-| PUT | `/restaurants/:restaurantId/ratings/:ratingId` | Update rating |
-| DELETE | `/restaurants/:restaurantId/ratings/:ratingId` | Delete rating |
-
-**Example POST Body:**
+### Error Response
 ```json
 {
-  "userId": "user001",
-  "rating": 5,
-  "review": "Excellent food and service!"
-}
-```
-
-**Note:** Creating a rating automatically updates the restaurant's average rating and totalRatings count.
-
-#### Comments
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/restaurants/:restaurantId/comments` | Get all comments for a restaurant |
-| GET | `/restaurants/:restaurantId/comments/:commentId` | Get single comment |
-| POST | `/restaurants/:restaurantId/comments` | Create new comment |
-| PUT | `/restaurants/:restaurantId/comments/:commentId` | Update comment |
-| DELETE | `/restaurants/:restaurantId/comments/:commentId` | Delete comment |
-
-**Example POST Body:**
-```json
-{
-  "userId": "user001",
-  "username": "John Doe",
-  "comment": "Great atmosphere and friendly staff!"
+  "status": "fail",
+  "message": "Error description",
+  "errors": [ /* validation errors */ ]
 }
 ```
 
 ---
 
-## Testing
+##  Testing
 
-### Manual Testing with Postman
+### Postman Collection
+Import the collection from `tests/Tattler_API_Sprint3_Collection.json`
 
-1. **Import Collection:**
-   - Open Postman
-   - Import the collection from `tests/Tattler_API_Collection.json`
+### Run All Tests
+1. Open Postman
+2. Select the collection
+3. Click "Run" button
+4. Review test results
 
-2. **Set Environment:**
-   - Create environment with variable `base_url`: `http://localhost:3000`
-   - Create environment with variable `api_version`: `v1`
-
-3. **Run Tests:**
-   - Execute requests in order
-   - Verify responses match expected status codes
-   - Check data integrity in MongoDB Atlas
-
-### Automated Tests
+### Manual Testing Examples
 ```bash
-npm test
+# Health check
+curl http://localhost:3000/health
+
+# Search
+curl "http://localhost:3000/api/v1/restaurants/search?q=pizza"
+
+# Filter
+curl "http://localhost:3000/api/v1/restaurants?cuisine=Mexican&minRating=4"
+
+# Nearby
+curl "http://localhost:3000/api/v1/restaurants/nearby?latitude=19.4326&longitude=-99.1332&radius=5"
 ```
 
-### Test Coverage
-- Health check endpoint
+---
+
+##  Performance Features
+
+### Caching
+- In-memory cache for GET requests
+- 5-minute TTL (Time To Live)
+- Automatic cache invalidation on data modifications
+- Cache size limit: 100 entries
+
+### Monitoring
+- Response time tracking
+
+
+### Database Optimization
+- Compound indexes for common queries
+- Text indexes for search
+- Geospatial indexes for location queries
+- Query performance analysis
+
+---
+
+##  Security
+
+### Implemented
+-  Helmet.js for HTTP security headers
+-  CORS with configurable origins
+-  Input validation and sanitization
+-  MongoDB injection prevention
+-  Rate limiting on database queries
+-  Error message sanitization
+
+## 📄 Version History
+
+### Version 2.1.0 (Sprint 3) - Current
+- Added advanced text search
+- Implemented multi-parameter filtering
+- Added flexible sorting options
+- Implemented geospatial search
+- Added restaurant statistics
+- Performance optimization with caching
+- Response time monitoring
+
+### Version 2.0.2 (Sprint 2)
+- RESTful API with Express.js
 - Restaurant CRUD operations
-- Rating creation and management
-- Comment creation and management
-- Input validation
-- Error handling
-- Pagination
-
----
-
-## Development
-
-### Running in Development Mode
-```bash
-npm run dev
-```
-This uses nodemon for automatic server restart on file changes.
-
-### Code Style Guidelines
-- Use ES6+ syntax
-- Follow RESTful API conventions
-- Use async/await for asynchronous operations
-- Implement proper error handling
-- Add comments for complex logic
-- Use meaningful variable names
-
-### Git Workflow
-```bash
-# Create feature branch
-git checkout -b feature/new-endpoint
-
-# Make changes and commit
-git add .
-git commit -m "feat: add new endpoint for X"
-
-# Push to GitHub
-git push origin feature/new-endpoint
-```
-
-### Commit Message Convention
-- `feat:` New feature
-- `fix:` Bug fix
-- `docs:` Documentation changes
-- `style:` Code formatting
-- `refactor:` Code restructuring
-- `test:` Adding tests
-- `chore:` Maintenance tasks
-
----
-
-## Security
-
-### Current Implementation
-- Helmet.js for security headers
-- CORS configuration
-- Input validation with express-validator
-- MongoDB injection prevention
-- Error message sanitization
-
-### To Be Implemented (Sprint 3)
-- JWT authentication
-- Rate limiting
-- Request body size limits
-- API key authentication
-
----
-
-## Troubleshooting
-
-### Server Won't Start
-```bash
-# Check if port 3000 is already in use
-lsof -i :3000  # macOS/Linux
-netstat -ano | findstr :3000  # Windows
-
-# Kill the process or change PORT in .env
-```
-
-### Database Connection Error
-1. Verify MongoDB Atlas credentials in `.env`
-2. Check network access in MongoDB Atlas (allow 0.0.0.0/0)
-3. Ensure cluster is running (not paused)
-4. Test connection:
-   ```bash
-   node src/config/testConnection.js
-   ```
-
-### Import Data Fails
-1. Ensure collections are created first:
-   ```bash
-   npm run create-collections
-   ```
-2. Check CSV file format matches expected schema
-3. Verify MongoDB connection is active
-
-### Validation Errors
-- Check request body matches schema requirements
-- Verify all required fields are included
-- Ensure data types are correct (e.g., latitude/longitude are numbers)
-
----
-## Contributing
-
-This is an academic project for Digital NAO. For questions or issues:
-1. Check the documentation
-2. Review test screenshots in `/tests/screenshots`
-3. Contact the development team
-
----
-
-## Version History
-
-### Version 2.0.2 (Sprint 2) - Current
-- Added Express.js RESTful API
-- Implemented restaurant CRUD operations
-- Added rating system with automatic average calculation
-- Implemented comment management
-- Added input validation and error handling
-- Configured security middleware
-- Created comprehensive Postman test suite
+- Rating and comment systems
+- Input validation and error handling
 
 ### Version 1.0.0 (Sprint 1)
-- MongoDB Atlas database setup
-- Database schema design
+- MongoDB database setup
 - Collections and indexes
-- CSV import scripts
-- Database backup system
+- Data import scripts
 
 ---
 
 ## Contact & Support
 
-- **Developer**: Luis E. Ramirez
+- **Developer**: Luis E Ramirez
 - **Email**: ramsalue@gmail.com
 - **GitHub**: https://github.com/ramsalue
 - **Institution**: Digital NAO
 
 ---
-## Acknowledgments
 
-- Digital NAO for project requirements
-- MongoDB Atlas for database hosting
-- Express.js community for excellent documentation
-- Postman for API testing tools
-
----
-
-**Last Updated**: 10-10-2025  
-**Version**: 2.0.2  
-**Status**: Sprint 2 Complete 
+**Last Updated**: 12-10-2025  
+**Version**: 2.1.0  
+**Status**: Sprint 3 Complete 

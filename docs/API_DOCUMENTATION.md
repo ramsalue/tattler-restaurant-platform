@@ -5,7 +5,6 @@
 **Base URL**: `http://localhost:3000/api/v1`  
 **API Version**: v1  
 **Content Type**: application/json  
-**Authentication**: None (Sprint 2), JWT (Sprint 3)
 
 ---
 

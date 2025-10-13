@@ -1,0 +1,799 @@
+{
+	"id": "a825d3c0-cb4e-43a5-96bc-ac88cb984e32",
+	"name": "Tattler Restaurant API - Sprint 2",
+	"timestamp": "2025-10-13T01:34:14.470Z",
+	"collection_id": "48954560-fb79ea6b-9eae-43fb-9c09-6e270bce22e8",
+	"folder_id": "48954560-eaf6c4f6-a402-4513-ac4c-cf80fd53ac40",
+	"environment_id": "48954560-2056ee63-2ea0-493a-a8cf-05bdc2f37b7a",
+	"totalPass": 38,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2025-10-13T01:34:11.336Z",
+	"totalFail": 4,
+	"results": [
+		{
+			"id": "b12e5dba-7d6e-4451-b8dd-62a9bd264775",
+			"name": "Basic text search",
+			"url": "http://localhost:3000/api/v1/restaurants/search?q=Mexican",
+			"time": 9,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Results array exists": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Results array exists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Results array exists": true
+				}
+			]
+		},
+		{
+			"id": "da349b65-e085-4b4f-be18-167450a17776",
+			"name": "Search with no results",
+			"url": "http://localhost:3000/api/v1/restaurants/search?q=xyz123nonexistent",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Results is 0": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Results is 0": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Results is 0": true
+				}
+			]
+		},
+		{
+			"id": "6422dc97-f59a-48a2-a506-3d30795a08c8",
+			"name": "Search with sorting",
+			"url": "http://localhost:3000/api/v1/restaurants/search?q=restaurant&sortBy=rating&order=desc",
+			"time": 4,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Results are sorted by rating descending": true
+			},
+			"testPassFailCounts": {
+				"Results are sorted by rating descending": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Results are sorted by rating descending": true
+				}
+			]
+		},
+		{
+			"id": "d94718d5-7db8-4c69-b64e-3c4c9df376ae",
+			"name": "Filter by cuisine",
+			"url": "http://localhost:3000/api/v1/restaurants?cuisine=Mexican",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"All results are Mexican cuisine": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"All results are Mexican cuisine": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"All results are Mexican cuisine": true
+				}
+			]
+		},
+		{
+			"id": "39562c51-82e3-420b-8085-37eb221e5944",
+			"name": "Filter by price range",
+			"url": "http://localhost:3000/api/v1/restaurants?priceRange=$$",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"All results match price range": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"All results match price range": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"All results match price range": true
+				}
+			]
+		},
+		{
+			"id": "a924a872-8398-47d7-b2ab-13700a174bc4",
+			"name": "Filter by multiple price ranges",
+			"url": "http://localhost:3000/api/v1/restaurants?priceRange=$$,$$$",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Results match multiple price ranges": true
+			},
+			"testPassFailCounts": {
+				"Results match multiple price ranges": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Results match multiple price ranges": true
+				}
+			]
+		},
+		{
+			"id": "34a5f999-f7d8-460c-883d-9a4fdd900106",
+			"name": "Filter by minimum rating",
+			"url": "http://localhost:3000/api/v1/restaurants?minRating=4.0",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"All results have rating >= 4.0": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"All results have rating >= 4.0": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"All results have rating >= 4.0": true
+				}
+			]
+		},
+		{
+			"id": "235dead7-37ef-471d-b023-2c3e0cd72d2c",
+			"name": "Filter by city",
+			"url": "http://localhost:3000/api/v1/restaurants?city=Mexico City",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"All results are in Mexico City": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"All results are in Mexico City": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"All results are in Mexico City": true
+				}
+			]
+		},
+		{
+			"id": "94139aab-ee7e-49a6-8569-cabf08d8dbdc",
+			"name": "Multiple filters combined",
+			"url": "http://localhost:3000/api/v1/restaurants?cuisine=Mexican&priceRange=$$&minRating=0.0",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"All results match all filters": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"All results match all filters": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"All results match all filters": true
+				}
+			]
+		},
+		{
+			"id": "9787b46c-32e2-485c-b730-2b63e8f5f108",
+			"name": "Sort by name ascending",
+			"url": "http://localhost:3000/api/v1/restaurants?sortBy=name&order=asc",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Results sorted alphabetically": true,
+				"Sort metadata included": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Results sorted alphabetically": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Sort metadata included": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Results sorted alphabetically": true,
+					"Sort metadata included": true
+				}
+			]
+		},
+		{
+			"id": "cc8b557c-49fc-4627-b285-17a3539d2e32",
+			"name": "Sort by name descending",
+			"url": "http://localhost:3000/api/v1/restaurants?sortBy=rating&order=desc",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Results sorted by rating desc": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Results sorted by rating desc": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Results sorted by rating desc": true
+				}
+			]
+		},
+		{
+			"id": "1ce1748f-1c56-42d9-ba32-fb3ee2551b5a",
+			"name": "Nearby restaurants",
+			"url": "http://localhost:3000/api/v1/restaurants/nearby?latitude=19.4326&longitude=-99.1332&radius=100",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Search center coordinates are returned": true,
+				"All restaurants have a distance property": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Search center coordinates are returned": {
+					"pass": 1,
+					"fail": 0
+				},
+				"All restaurants have a distance property": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Search center coordinates are returned": true,
+					"All restaurants have a distance property": true
+				}
+			]
+		},
+		{
+			"id": "7aa8c631-8aa2-4340-a836-3c1b2ca5a35c",
+			"name": "Nearby with filters",
+			"url": "http://localhost:3000/api/v1/restaurants/nearby?latitude=19.4326&longitude=-99.1332&radius=100&cuisine=Mexican",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"All results match the additional filters": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"All results match the additional filters": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"All results match the additional filters": true
+				}
+			]
+		},
+		{
+			"id": "64ca71d7-6052-4871-8960-bca7dbfdab40",
+			"name": "Restaurant statistics",
+			"url": "http://localhost:3000/api/v1/restaurants/stats",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Statistics structure is correct": true,
+				"Cuisine statistics exist": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Statistics structure is correct": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Cuisine statistics exist": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Statistics structure is correct": true,
+					"Cuisine statistics exist": true
+				}
+			]
+		},
+		{
+			"id": "cbbc76cc-86f7-41c8-89aa-d0c6d0c23e61",
+			"name": "Complex combined query",
+			"url": "http://localhost:3000/api/v1/restaurants?cuisine=Mexican&city=Mexico City&priceRange=$$&minRating=3.5&sortBy=rating&order=desc&limit=5&page=1",
+			"time": 8,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Pagination metadata correct": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Pagination metadata correct": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				8
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Pagination metadata correct": true
+				}
+			]
+		},
+		{
+			"id": "9c6f5e69-311a-42a9-a38f-8e857f60b85b",
+			"name": "Error - Invalid Search Query (Empty)",
+			"url": "http://localhost:3000/api/v1/restaurants/search?q=",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 400": false,
+				"Validation errors array is present": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Validation errors array is present": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 400": false,
+					"Validation errors array is present": true
+				}
+			]
+		},
+		{
+			"id": "5ce0f021-c5d6-4202-bb31-8dbb3c303b97",
+			"name": "Error - Invalid Latitude",
+			"url": "http://localhost:3000/api/v1/restaurants/nearby?latitude=999&longitude=-99.1332",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 400": false,
+				"Validation error is returned": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Validation error is returned": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 400": false,
+					"Validation error is returned": true
+				}
+			]
+		},
+		{
+			"id": "d9caa988-7967-4a44-a72c-22d2a75bc9c9",
+			"name": "Error - Invalid sort parameter",
+			"url": "http://localhost:3000/api/v1/restaurants?sortBy=invalidField",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 400": false,
+				"Validation error for sortBy exists": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Validation error for sortBy exists": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 400": false,
+					"Validation error for sortBy exists": true
+				}
+			]
+		},
+		{
+			"id": "826da634-edf0-4336-9c47-5aa48bd0d047",
+			"name": "Error - Invalid rating range",
+			"url": "http://localhost:3000/api/v1/restaurants?minRating=5&maxRating=3",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 400": false,
+				"Error message about rating range": true
+			},
+			"testPassFailCounts": {
+				"Status code is 400": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Error message about rating range": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 400": false,
+					"Error message about rating range": true
+				}
+			]
+		},
+		{
+			"id": "4c71462c-9fb3-4a54-8f0e-279c2b16023e",
+			"name": "Performance - Response time check",
+			"url": "http://localhost:3000/api/v1/restaurants?limit=8",
+			"time": 5,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true,
+				"Response time under 200ms": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time under 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5
+			],
+			"allTests": [
+				{
+					"Status code is 200": true,
+					"Response time under 200ms": true
+				}
+			]
+		},
+		{
+			"id": "847f6fe5-bee4-4706-89b3-bfeccd1203d6",
+			"name": "Performance - Cache test",
+			"url": "http://localhost:3000/api/v1/restaurants/stats",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Status code is 200": true
+			},
+			"testPassFailCounts": {
+				"Status code is 200": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Status code is 200": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 118,
+	"collection": {
+		"requests": [
+			{
+				"id": "b12e5dba-7d6e-4451-b8dd-62a9bd264775",
+				"method": "GET"
+			},
+			{
+				"id": "da349b65-e085-4b4f-be18-167450a17776",
+				"method": "GET"
+			},
+			{
+				"id": "6422dc97-f59a-48a2-a506-3d30795a08c8",
+				"method": "GET"
+			},
+			{
+				"id": "d94718d5-7db8-4c69-b64e-3c4c9df376ae",
+				"method": "GET"
+			},
+			{
+				"id": "39562c51-82e3-420b-8085-37eb221e5944",
+				"method": "GET"
+			},
+			{
+				"id": "a924a872-8398-47d7-b2ab-13700a174bc4",
+				"method": "GET"
+			},
+			{
+				"id": "34a5f999-f7d8-460c-883d-9a4fdd900106",
+				"method": "GET"
+			},
+			{
+				"id": "235dead7-37ef-471d-b023-2c3e0cd72d2c",
+				"method": "GET"
+			},
+			{
+				"id": "94139aab-ee7e-49a6-8569-cabf08d8dbdc",
+				"method": "GET"
+			},
+			{
+				"id": "9787b46c-32e2-485c-b730-2b63e8f5f108",
+				"method": "GET"
+			},
+			{
+				"id": "cc8b557c-49fc-4627-b285-17a3539d2e32",
+				"method": "GET"
+			},
+			{
+				"id": "1ce1748f-1c56-42d9-ba32-fb3ee2551b5a",
+				"method": "GET"
+			},
+			{
+				"id": "7aa8c631-8aa2-4340-a836-3c1b2ca5a35c",
+				"method": "GET"
+			},
+			{
+				"id": "64ca71d7-6052-4871-8960-bca7dbfdab40",
+				"method": "GET"
+			},
+			{
+				"id": "cbbc76cc-86f7-41c8-89aa-d0c6d0c23e61",
+				"method": "GET"
+			},
+			{
+				"id": "9c6f5e69-311a-42a9-a38f-8e857f60b85b",
+				"method": "GET"
+			},
+			{
+				"id": "5ce0f021-c5d6-4202-bb31-8dbb3c303b97",
+				"method": "GET"
+			},
+			{
+				"id": "d9caa988-7967-4a44-a72c-22d2a75bc9c9",
+				"method": "GET"
+			},
+			{
+				"id": "826da634-edf0-4336-9c47-5aa48bd0d047",
+				"method": "GET"
+			},
+			{
+				"id": "4c71462c-9fb3-4a54-8f0e-279c2b16023e",
+				"method": "GET"
+			},
+			{
+				"id": "847f6fe5-bee4-4706-89b3-bfeccd1203d6",
+				"method": "GET"
+			}
+		]
+	}
+}

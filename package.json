@@ -1,6 +1,6 @@
 {
   "name": "tattler-restaurant-platform",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Restaurant directory platform with personalized experiences using MongoDB and Express.js",
   "main": "src/server.js",
   "scripts": {

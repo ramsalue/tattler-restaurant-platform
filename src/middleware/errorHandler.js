@@ -10,7 +10,7 @@ class AppError extends Error {
     this.statusCode = statusCode;
     // 'fail' for 4xx errors, 'error' for 5xx errors.
     this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
-    // We only create operational errors, so this is always true.
+    //This only create operational errors, so this is always true.
     this.isOperational = true;
     Error.captureStackTrace(this, this.constructor);
   }
@@ -25,7 +25,6 @@ const errorHandler = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
-  // For development, we want to see all the details and the stack trace.
   if (process.env.NODE_ENV === 'development') {
     res.status(err.statusCode).json({
       status: err.status,
@@ -33,8 +32,7 @@ const errorHandler = (err, req, res, next) => {
       message: err.message,
       stack: err.stack
     });
-  } else { // For production, we only send a clean, simple message.
-    // For our own operational errors, send the message we created.
+  } else {
     if (err.isOperational) {
       res.status(err.statusCode).json({
         status: err.status,

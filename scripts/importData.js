@@ -46,8 +46,12 @@ async function importRestaurants() {
         state: row.state,
         zipCode: row.zipCode,
         coordinates: {
-          latitude: new Double(parseFloat(row.latitude)),   // ← Double
-          longitude: new Double(parseFloat(row.longitude))  // ← Double
+          type: 'Point',
+          coordinates: [
+          // GeoJSON format is ALWAYS [longitude, latitude]
+          new Double(parseFloat(row.longitude)),
+          new Double(parseFloat(row.latitude))
+          ]
         }
       },
       priceRange: row.priceRange,

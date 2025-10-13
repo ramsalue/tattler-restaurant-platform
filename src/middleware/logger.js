@@ -31,5 +31,4 @@ const devLogger = morgan((tokens, req, res) => {
 // A standard, more detailed format for production logging.
 const prodLogger = morgan('combined');
 
-// We export the appropriate logger based on the NODE_ENV environment variable.
 module.exports = process.env.NODE_ENV === 'production' ? prodLogger : devLogger;

@@ -13,7 +13,7 @@ class Database {
   // Asynchronous method to connect to the database.
   async connect() {
     try {
-      // If we are already connected, don't create a new connection.
+      // If it's already connected, don't create a new connection.
       if (this.client) {
         console.log(' Database already connected');
         return this.db;
@@ -68,7 +68,7 @@ class Database {
   }
 }
 
-// This is the "Singleton" pattern. We create ONE instance of the Database class
-// and export it. This ensures our entire application shares the same single instance.
+// This is the "Singleton" pattern. It create ONE instance of the Database class
+// and export it. This ensures the entire application shares the same single instance.
 const database = new Database();
 module.exports = database;
