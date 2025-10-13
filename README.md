@@ -405,7 +405,7 @@ curl "http://localhost:3000/api/v1/restaurants/nearby?latitude=19.4326&longitude
 -  Rate limiting on database queries
 -  Error message sanitization
 
-## 📄 Version History
+## Version History
 
 ### Version 2.1.0 (Sprint 3) - Current
 - Added advanced text search
